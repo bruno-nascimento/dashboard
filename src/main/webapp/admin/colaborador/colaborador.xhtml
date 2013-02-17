@@ -1,0 +1,152 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{colaboradorBean}" />
+
+	<ui:define name="content">
+	
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+
+					<div id="widget_title" class="widget-title" onclick="$('#formz').collapse('toggle')">
+						<span class="icon"> <i class="icon icon-pencil"></i></span>
+						<h5>Inserir colaborador</h5>
+					</div>
+					
+					<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Nome :</label>
+							<div class="controls">
+								<p:inputText id="nome" value="#{colaboradorBean.colaboradorForm.nome}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Equipe :</label>
+							<div class="controls">
+								<h:selectOneMenu id="equipe" effect="fade" valueChangeListener="#{colaboradorBean.equipeValueChangeListener}" value="#{colaboradorBean.equipeSelectedItemId}" >
+									<f:selectItem itemValue="" itemLabel="Selecione uma equipe ..."/>
+									 <f:selectItems value="#{colaboradorBean.equipeList}" var="equipe" itemLabel="#{equipe.label}" itemValue="#equipe.value}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Cargo :</label>
+							<div class="controls">
+								<h:selectOneMenu id="cargo" data-placeholder="Selecione um cargo ..." effect="fade" valueChangeListener="#{colaboradorBean.cargoValueChangeListener}" value="#{colaboradorBean.cargoSelectedItemId}">
+									<f:selectItem itemValue="" itemLabel="Selecione um cargo..."/>
+									<f:selectItems value="#{colaboradorBean.cargoList}" var="cargo" itemLabel="#{cargo.label}" itemValue="#{cargo.value}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Colaborador pai :</label>
+							<div class="controls">
+								<h:selectOneMenu id="colaboradorPai" data-placeholder="Selecione um colaborador pai ..." effect="fade" valueChangeListener="#{colaboradorBean.colaboradorPaiValueChangeListener}" value="#{colaboradorBean.colaboradorPaiSelectedItemId}">
+									<f:selectItem itemValue="" itemLabel="Selecione um colaborador pai ..."/>
+									<f:selectItems value="#{colaboradorBean.colaboradorPaiList}" var="colaboradorPai" itemLabel="#{colaboradorPai.label}" itemValue="#{colaboradorPai.value}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Local alocação :</label>
+							<div class="controls">
+								<p:inputText id="localAlocacao" value="#{colaboradorBean.colaboradorForm.localAlocacao}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Telefone :</label>
+							<div class="controls">
+								<p:inputText id="telefone" value="#{colaboradorBean.colaboradorForm.telefone}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Email :</label>
+							<div class="controls">
+								<p:inputText id="email" value="#{colaboradorBean.colaboradorForm.email}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Remuneração :</label>
+							<div class="controls">
+								<p:inputText id="remuneracao" value="#{colaboradorBean.colaboradorForm.remuneracao}" />
+							</div>
+						</div>
+						
+						<div class="form-actions">
+							<p:commandButton value="#{colaboradorBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
+								actionListener="#{colaboradorBean.save}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{colaboradorBean.showDeleteButton}"
+								actionListener="#{colaboradorBean.delete}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
+								actionListener="#{colaboradorBean.cancel}" oncomplete="$('select').chosen();" />
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de colaboradores</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="colaborador" value="#{colaboradorBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{colaboradorBean.colaboradorForm}" selectionMode="single" emptyMessage="Nenhum colaborador cadastrado">
+								<p:ajax event="rowSelect" listener="#{colaboradorBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
+								<p:column headerText="Nome">
+									<h:outputText value="#{colaborador.nome}" />
+								</p:column>
+								<p:column headerText="Equipe">
+									<h:outputText value="#{colaborador.equipe.nome}" />
+								</p:column>
+								<p:column headerText="Cargo">
+									<h:outputText value="#{colaborador.cargo.nome}" />
+								</p:column>
+								<p:column headerText="Email">
+									<h:outputText value="#{colaborador.email}" />
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+		
+	</ui:define>
+
+</ui:composition>

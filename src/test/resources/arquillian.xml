@@ -1,0 +1,71 @@
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+    <container qualifier="jbossas-managed" default="true">
+        <configuration>
+            <property name="jbossHome">/home/bruno/jboss_seam/jboss-as-7.1.1.Final</property>
+        </configuration>
+    </container>
+    
+    <!-- POM CFG -->
+    <!-- PROFILE 
+    <profile>
+	    <id>arquillian-jbossas-managed</id>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.jboss.spec</groupId>
+	            <artifactId>jboss-javaee-6.0</artifactId>
+	            <version>1.0.0.Final</version>
+	            <type>pom</type>
+	            <scope>provided</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.jboss.as</groupId>
+	            <artifactId>jboss-as-arquillian-container-managed</artifactId>
+	            <version>7.1.1.Final</version>
+	            <scope>test</scope>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.jboss.arquillian.protocol</groupId>
+	            <artifactId>arquillian-protocol-servlet</artifactId>
+	            <scope>test</scope>
+	        </dependency>
+	    </dependencies>
+	</profile>
+    PROFILE -->
+    
+    <!-- 
+    <build>
+	    <plugins>
+	        <plugin>
+	            <artifactId>maven-dependency-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>unpack</id>
+	                    <phase>process-test-classes</phase>
+	                    <goals>
+	                        <goal>unpack</goal>
+	                    </goals>
+	                    <configuration>
+	                        <artifactItems>
+	                            <artifactItem>
+	                                <groupId>org.jboss.as</groupId>
+	                                <artifactId>jboss-as-dist</artifactId>
+	                                <version>7.1.1.Final</version>
+	                                <type>zip</type>
+	                                <overWrite>false</overWrite>
+	                                <outputDirectory>target</outputDirectory>
+	                            </artifactItem>
+	                        </artifactItems>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
+	    </plugins>
+	</build> 
+     -->
+    
+    
+</arquillian>

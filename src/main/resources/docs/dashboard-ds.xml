@@ -1,0 +1,20 @@
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+    <datasource jndi-name="java:jboss/datasources/dashboard-ds" pool-name="dashboardPool" 
+    	enabled="true" use-java-context="true" jta="true">
+        <connection-url>jdbc:mysql://localhost:3306/dashboard</connection-url>
+        <driver>mysql-5-driver</driver>
+        <pool>
+            <min-pool-size>10</min-pool-size>
+            <max-pool-size>100</max-pool-size>
+            <prefill>true</prefill>
+        </pool>
+        <security>
+            <user-name>root</user-name>
+            <password>root</password>
+        </security>
+        <statement>
+            <prepared-statement-cache-size>32</prepared-statement-cache-size>
+            <share-prepared-statements/>
+      </statement>
+    </datasource>
+</datasources>

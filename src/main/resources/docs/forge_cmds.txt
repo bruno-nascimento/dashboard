@@ -1,0 +1,36 @@
+[dashboard] dashboard $ generate-entities --datasource dashboard-ds 
+ ? Enter the password for JDBC connection. ****
+ ? In which package you'd like to generate the entities, or enter for default: [com.example.dashboard.model] br.com.bsitecnologia.dashboard.model
+Found 18 tables in datasource
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AlertaProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Impedimento.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/ColaboradorProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EmailTemplate.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Artefato.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/TransicaoStatus.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Alerta.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EmailTemplateColaboradores.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Equipe.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Comentario.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Status.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AtorExternoTransicaoStatus.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/EquipeProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Colaborador.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/HistoricoProjeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Cargo.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/Projeto.java
+Generated java at /home/bruno/jboss_seam/workspace/dashboard/src/main/java/br/com/bsitecnologia/dashboard/model/AtorExterno.java
+Generated 18 java files.
+
+From Hibernate configuration docs:
+
+hibernate.hbm2ddl.auto
+
+    Automatically validates or exports schema DDL to the database when the SessionFactory is created.
+    With create-drop, the database schema will be dropped when the SessionFactory is closed explicitly.
+
+    e.g. validate | update | create | create-drop
+
+So, you can set it to validate and it will verify if everything in your hibernate mappings is present in the database.
+If you set it to update, then every time you add a mapped class or property, the underlying db schema will be updated
+to reflect that change.
