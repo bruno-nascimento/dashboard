@@ -1,0 +1,131 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{perfilAcaoDominioBean}" />
+
+	<ui:define name="content">
+	
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+
+					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+						<span class="icon"> <i class="icon icon-pencil"></i>
+						</span>
+						<h5>Inserir perfil / ação / dominio</h5>
+					</div>
+					
+					<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{perfilAcaoDominioBean.clienteValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{perfilAcaoDominioBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Perfil :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="perfil" valueChangeListener="#{perfilAcaoDominioBean.perfilValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.perfilIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{perfilAcaoDominioBean.perfilList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Ação :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="acao" valueChangeListener="#{perfilAcaoDominioBean.acaoValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.acaoIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{perfilAcaoDominioBean.acaoList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Dominio :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="dominio" valueChangeListener="#{perfilAcaoDominioBean.dominioValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.dominioIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{perfilAcaoDominioBean.dominioList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="form-actions">
+							
+							<p:commandButton value="#{perfilAcaoDominioBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.save}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{perfilAcaoDominioBean.showDeleteButton}" actionListener="#{perfilAcaoDominioBean.delete}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.cancel}" immediate="true"/>
+					
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de perfil / ação / dominios</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="perfilAcaoDominio"
+								value="#{perfilAcaoDominioBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{perfilAcaoDominioBean.perfilAcaoDominioForm}" selectionMode="single" emptyMessage="Nenhum perfil / ação / dominio cadastrado">
+								<p:ajax event="rowSelect" listener="#{perfilAcaoDominioBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
+								<p:column headerText="Perfil">
+									<h:outputText value="#{perfilAcaoDominio.perfil.nome}" />
+								</p:column>
+								<p:column headerText="Ação">
+									<h:outputText value="#{perfilAcaoDominio.acao.nome}" />
+								</p:column>
+								<p:column headerText="Dominio">
+									<h:outputText value="#{perfilAcaoDominio.dominio.nome}" />
+								</p:column>
+								<p:column headerText="Cliente">
+									<h:outputText value="#{perfilAcaoDominio.cliente.nome}" />
+								</p:column>
+								
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

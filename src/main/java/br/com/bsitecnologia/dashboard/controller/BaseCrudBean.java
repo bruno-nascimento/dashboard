@@ -51,7 +51,7 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	protected abstract void resetFormEntity();
 	
 	
-	/*Metodos a serem sobreescritos quando necessario*/
+	/*Metodos que podem ser sobreescritos quando necessario*/
 	
 	protected void postRowSelect(){}
 	protected void postLoad(){}
