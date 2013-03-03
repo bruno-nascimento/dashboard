@@ -1,5 +1,6 @@
 package br.com.bsitecnologia.dashboard.controller.admin;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,111 +16,117 @@ import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.Conversatio
 import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
+import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.StatusDao;
 import br.com.bsitecnologia.dashboard.dao.TransicaoStatusDao;
+import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.Status;
 import br.com.bsitecnologia.dashboard.model.TransicaoStatus;
 
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
-
-	private static final long serialVersionUID = 1375567838606752462L;
+public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implements Serializable {
 	
-	@Inject private StatusDao statusDao;
-	private List<Status> allStatusFromDb;
+	private static final long serialVersionUID = -563351669224686839L;
 	
-	private List<SelectItem> statusFromList;
-	private List<SelectItem> statusToList;
-	private String statusFromSelectedItemId;
-	private String statusToSelectedItemId;
-	
-	@Inject private TransicaoStatusDao transicaoTransicaoStatusDao;
+	@Inject private TransicaoStatusDao transicaoStatusDao;
 	@Inject @New private TransicaoStatus transicaoStatusForm;
 	@Inject private DashboardDataModel<TransicaoStatus> dataModel;
+	
+	@Inject private ClienteDao clienteDao;
 
+	private List<Cliente> allClientesFromDB;
+	private List<SelectItem> clienteList;
+	private String clienteIdSelectedItem;
+	
+	@Inject private StatusDao statusDao;
+
+	private List<Status> allStatusFromDB;
+	private List<SelectItem> statusDeList;
+	private List<SelectItem> statusParaList;
+	private String statusDeIdSelectedItem;
+	private String statusParaIdSelectedItem;
+	
 	@PostConstruct
 	public void postConstruct(){
 		super.init();
-		setTitle(BreadcrumbEnum.TRANSICAO_STATUS.getName());
 	}
 	
-	public void statusFromValueChangeListener(ValueChangeEvent event){
-		transicaoStatusForm.setStatusFrom(getStatusFromValueChangeEvent(event));
-		statusToList = fillstatusSelectItemList(transicaoStatusForm.getStatusFrom());
+	public void clienteValueChangeListener(ValueChangeEvent event){
+		transicaoStatusForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
 	}
 	
-	public void statusToValueChangeListener(ValueChangeEvent event){
-		transicaoStatusForm.setStatusTo(getStatusFromValueChangeEvent(event));
+	public void statusDeValueChangeListener(ValueChangeEvent event){
+		transicaoStatusForm.setStatusDe(getStatusFromValueChangeEvent(event));
+		statusParaList = fillStatusSelectItemList(transicaoStatusForm.getStatusDe());
 	}
 	
-	private List<SelectItem> fillstatusSelectItemList(Status skipFromList) {
+	public void statusParaValueChangeListener(ValueChangeEvent event){
+		transicaoStatusForm.setStatusPara(getStatusFromValueChangeEvent(event));
+	}
+	
+	private Status getStatusFromValueChangeEvent(ValueChangeEvent event){
+		return getEntityFromValueChangeEvent(event, allStatusFromDB);
+	}
+	
+	private List<SelectItem> fillStatusSelectItemList(Status skipFromList) {
 		List<SelectItem> statusSelectItemList = new ArrayList<SelectItem>();
-		for(Status status : allStatusFromDb){
-			if(skipFromList == null || !status.getId().equals(skipFromList.getId()) ){
+		for(Status status : allStatusFromDB){
+			if(!status.getId().equals(skipFromList.getId()) ){
 				statusSelectItemList.add(new SelectItem(status.getId(), status.getNome()));
 			}
 		}
 		return statusSelectItemList;
 	}
 	
-	private Status getStatusFromValueChangeEvent(ValueChangeEvent event){
-		return getEntityFromValueChangeEvent(event, allStatusFromDb);
-	}
-	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
-	
-	@Override
-	protected TransicaoStatusDao getDao() {
-		return transicaoTransicaoStatusDao;
-	}
 
 	@Override
-	protected void setFormEntity(TransicaoStatus status) {
-		transicaoStatusForm = status;
+	protected TransicaoStatusDao getDao() {
+		return transicaoStatusDao;
 	}
 
 	@Override
 	protected TransicaoStatus getFormEntity() {
 		return transicaoStatusForm;
 	}
-	
+
+	@Override
+	protected void setFormEntity(TransicaoStatus tipoServico) {
+		transicaoStatusForm = tipoServico;		
+	}
+
 	@Override
 	protected BreadcrumbEnum[] setBreadcrumbArray() {
-		return new BreadcrumbEnum[] {BreadcrumbEnum.HOME, BreadcrumbEnum.TRANSICAO_STATUS};
+		return new BreadcrumbEnum[]{BreadcrumbEnum.HOME, BreadcrumbEnum.CARGO};
 	}
-	
+
 	@Override
 	protected void resetFormEntity() {
 		transicaoStatusForm = new TransicaoStatus();
-		statusFromSelectedItemId = null;
-		statusToSelectedItemId = null;
+		clienteIdSelectedItem = null;
+		statusDeIdSelectedItem = null;
+		statusParaIdSelectedItem = null;
 	}
 	
 	@Override
-	protected void postLoad(){
-		allStatusFromDb = statusDao.findAll();
-		statusFromList = fillSelectItemList(allStatusFromDb);
+	protected void postLoad() {
+		allClientesFromDB = clienteDao.findAll();
+		allStatusFromDB = statusDao.findAll();
+		clienteList = fillSelectItemList(allClientesFromDB);
+		statusDeList = fillSelectItemList(allStatusFromDB);
 	}
 	
 	@Override
 	protected void postRowSelect() {
-		statusFromSelectedItemId = transicaoStatusForm.getStatusFrom().getId().toString();
-		statusToList = fillstatusSelectItemList(transicaoStatusForm.getStatusFrom());
-		statusToSelectedItemId = transicaoStatusForm.getStatusTo().getId().toString();
+		clienteIdSelectedItem = transicaoStatusForm.getCliente() != null ? transicaoStatusForm.getCliente().getId().toString() : null;
+		statusDeIdSelectedItem = transicaoStatusForm.getStatusDe() != null ? transicaoStatusForm.getStatusDe().getId().toString() : null;
+		statusParaIdSelectedItem = transicaoStatusForm.getStatusPara() != null ? transicaoStatusForm.getStatusPara().getId().toString() : null;
 	}
-
-	/*gets&sets*/
 	
-	public TransicaoStatusDao getTransicaoStatusDao() {
-		return transicaoTransicaoStatusDao;
-	}
-
-	public void setTransicaoStatusDao(TransicaoStatusDao transicaoTransicaoStatusDao) {
-		this.transicaoTransicaoStatusDao = transicaoTransicaoStatusDao;
-	}
-
+	/* get&set */
+	
 	public TransicaoStatus getTransicaoStatusForm() {
 		return transicaoStatusForm;
 	}
@@ -127,45 +134,53 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus>{
 	public void setTransicaoStatusForm(TransicaoStatus transicaoStatusForm) {
 		this.transicaoStatusForm = transicaoStatusForm;
 	}
-
+	
 	public DashboardDataModel<TransicaoStatus> getDataModel() {
 		return dataModel;
 	}
+	
+	public String getClienteIdSelectedItem() {
+		return clienteIdSelectedItem;
+	}
 
-	public void setDataModel(DashboardDataModel<TransicaoStatus> dataModel) {
-		this.dataModel = dataModel;
+	public void setClienteIdSelectedItem(String clienteIdSelectedItem) {
+		this.clienteIdSelectedItem = clienteIdSelectedItem;
+	}
+
+	public List<Cliente> getAllClientesFromDB() {
+		return allClientesFromDB;
+	}
+
+	public List<SelectItem> getClienteList() {
+		return clienteList;
 	}
 	
-	public List<SelectItem> getStatusFromList() {
-		return statusFromList;
+	public String getStatusDeIdSelectedItem() {
+		return statusDeIdSelectedItem;
 	}
 
-	public void setStatusFromList(List<SelectItem> statusFromList) {
-		this.statusFromList = statusFromList;
+	public void setStatusDeIdSelectedItem(String statusDeIdSelectedItem) {
+		this.statusDeIdSelectedItem = statusDeIdSelectedItem;
 	}
 
-	public List<SelectItem> getStatusToList() {
-		return statusToList;
+	public String getStatusParaIdSelectedItem() {
+		return statusParaIdSelectedItem;
 	}
 
-	public void setStatusToList(List<SelectItem> statusToList) {
-		this.statusToList = statusToList;
+	public void setStatusParaIdSelectedItem(String statusParaIdSelectedItem) {
+		this.statusParaIdSelectedItem = statusParaIdSelectedItem;
 	}
 
-	public String getStatusFromSelectedItemId() {
-		return statusFromSelectedItemId;
+	public List<Status> getAllStatusFromDB() {
+		return allStatusFromDB;
 	}
 
-	public void setStatusFromSelectedItemId(String statusFromSelectedItemId) {
-		this.statusFromSelectedItemId = statusFromSelectedItemId;
+	public List<SelectItem> getStatusDeList() {
+		return statusDeList;
 	}
 
-	public String getStatusToSelectedItemId() {
-		return statusToSelectedItemId;
+	public List<SelectItem> getStatusParaList() {
+		return statusParaList;
 	}
-
-	public void setStatusToSelectedItemId(String statusToSelectedItemId) {
-		this.statusToSelectedItemId = statusToSelectedItemId;
-	}
-
+	
 }

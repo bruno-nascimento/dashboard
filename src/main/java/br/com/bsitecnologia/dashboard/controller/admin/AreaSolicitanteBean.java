@@ -16,20 +16,20 @@ import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
-import br.com.bsitecnologia.dashboard.dao.StatusDao;
+import br.com.bsitecnologia.dashboard.dao.AreaSolicitanteDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
-import br.com.bsitecnologia.dashboard.model.Status;
+import br.com.bsitecnologia.dashboard.model.AreaSolicitante;
 
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class StatusBean extends BaseCrudBean<Status> implements Serializable {
+public class AreaSolicitanteBean extends BaseCrudBean<AreaSolicitante> implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
-	@Inject private StatusDao statusDao;
-	@Inject @New private Status statusForm;
-	@Inject private DashboardDataModel<Status> dataModel;
+	@Inject private AreaSolicitanteDao areaSolicitanteDao;
+	@Inject @New private AreaSolicitante areaSolicitanteForm;
+	@Inject private DashboardDataModel<AreaSolicitante> dataModel;
 	
 	@Inject private ClienteDao clienteDao;
 
@@ -43,24 +43,24 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){
-		statusForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
+		areaSolicitanteForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
 
 	@Override
-	protected StatusDao getDao() {
-		return statusDao;
+	protected AreaSolicitanteDao getDao() {
+		return areaSolicitanteDao;
 	}
 
 	@Override
-	protected Status getFormEntity() {
-		return statusForm;
+	protected AreaSolicitante getFormEntity() {
+		return areaSolicitanteForm;
 	}
 
 	@Override
-	protected void setFormEntity(Status tipoServico) {
-		statusForm = tipoServico;		
+	protected void setFormEntity(AreaSolicitante tipoServico) {
+		areaSolicitanteForm = tipoServico;		
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 
 	@Override
 	protected void resetFormEntity() {
-		statusForm = new Status();
+		areaSolicitanteForm = new AreaSolicitante();
 		clienteIdSelectedItem = null;
 	}
 	
@@ -82,20 +82,20 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	
 	@Override
 	protected void postRowSelect() {
-		clienteIdSelectedItem = statusForm.getCliente() != null ? statusForm.getCliente().getId().toString() : null;
+		clienteIdSelectedItem = areaSolicitanteForm.getCliente() != null ? areaSolicitanteForm.getCliente().getId().toString() : null;
 	}
 	
 	/* get&set */
 	
-	public Status getStatusForm() {
-		return statusForm;
+	public AreaSolicitante getAreaSolicitanteForm() {
+		return areaSolicitanteForm;
 	}
 
-	public void setStatusForm(Status statusForm) {
-		this.statusForm = statusForm;
+	public void setAreaSolicitanteForm(AreaSolicitante areaSolicitanteForm) {
+		this.areaSolicitanteForm = areaSolicitanteForm;
 	}
 	
-	public DashboardDataModel<Status> getDataModel() {
+	public DashboardDataModel<AreaSolicitante> getDataModel() {
 		return dataModel;
 	}
 	

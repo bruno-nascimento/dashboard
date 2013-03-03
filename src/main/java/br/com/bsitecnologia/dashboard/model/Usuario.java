@@ -3,6 +3,8 @@ package br.com.bsitecnologia.dashboard.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,43 +13,60 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
 @Entity
-@Table(name = "Usuario", catalog = "dashboard", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
+@Table(name = "Usuario", catalog = "dashboard")
 public class Usuario implements Serializable, BaseEntity {
-
-	private static final long serialVersionUID = 4408109929394314711L;
+	
+	private static final long serialVersionUID = 114469773949877471L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "perfil", nullable = false)
 	private Perfil perfil;
-	@Column(name = "login", unique = true, nullable = false, length = 100)
-	private String login;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente")
+	private Cliente cliente;
+	
+	@Column(name = "email", nullable = false)
+	private String email;
+	
 	@Column(name = "senha", nullable = false, length = 86)
 	private String senha;
-	@Column(name = "isColaborador", nullable = false)
-	private boolean isColaborador;
 	
-	@Transient
-	private boolean logado;
+	@Column(name = "nome", nullable = false)
+	private String nome;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	private List<Telefone> telefones = new ArrayList<Telefone>(0);
 
 	public Usuario() {
 	}
 
-	public Usuario(Perfil perfil, String login, String senha, boolean isColaborador) {
+	public Usuario(Perfil perfil, String email, String senha, String nome) {
 		this.perfil = perfil;
-		this.login = login;
+		this.email = email;
 		this.senha = senha;
-		this.isColaborador = isColaborador;
+		this.nome = nome;
+	}
+
+	public Usuario(Perfil perfil, Cliente cliente, String email, String senha,
+			String nome, List<Telefone> telefones) {
+		this.perfil = perfil;
+		this.cliente = cliente;
+		this.email = email;
+		this.senha = senha;
+		this.nome = nome;
+		this.telefones = telefones;
 	}
 
 	public Integer getId() {
@@ -66,12 +85,20 @@ public class Usuario implements Serializable, BaseEntity {
 		this.perfil = perfil;
 	}
 
-	public String getLogin() {
-		return this.login;
+	public Cliente getCliente() {
+		return this.cliente;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -82,25 +109,25 @@ public class Usuario implements Serializable, BaseEntity {
 		this.senha = senha;
 	}
 
-	public boolean isColaborador() {
-		return isColaborador;
+	public String getNome() {
+		return this.nome;
 	}
 
-	public void setColaborador(boolean isColaborador) {
-		this.isColaborador = isColaborador;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public boolean isLogado() {
-		return logado;
+	public List<Telefone> getTelefones() {
+		return this.telefones;
 	}
 
-	public void setLogado(boolean logado) {
-		this.logado = logado;
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
 	}
 
 	@Override
 	public String getEntityDescription() {
-		return login;
+		return nome;
 	}
 
 }

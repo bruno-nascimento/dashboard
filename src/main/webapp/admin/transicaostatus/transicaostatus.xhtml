@@ -16,9 +16,10 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title" onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i></span>
-						<h5>Inserir transição de status</h5>
+					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+						<span class="icon"> <i class="icon icon-pencil"></i>
+						</span>
+						<h5>Inserir transição status</h5>
 					</div>
 					
 					<h:form id="formz" styleClass="form-horizontal">
@@ -31,33 +32,44 @@
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label">Status origem :</label>
+							<label class="control-label">De :</label>
 							<div class="controls">
-								<h:selectOneMenu id="statusFrom" effect="fade" valueChangeListener="#{transicaoStatusBean.statusFromValueChangeListener}" value="#{transicaoStatusBean.statusFromSelectedItemId}" >
-                                     <p:ajax event="change" update="statusTo" onstart="$('#formz_statusTo_chzn').remove();" oncomplete="$('select').chosen();"/>
-		                             <f:selectItem itemValue=""  itemLabel="Selecione um status de origem ..."/>
-									 <f:selectItems value="#{transicaoStatusBean.statusFromList}" var="statusFrom" itemLabel="#{statusFrom.label}" itemValue="#{statusFrom.value}" />  
+						        <h:selectOneMenu id="statusDe" valueChangeListener="#{transicaoStatusBean.statusDeValueChangeListener}" effect="fade" value="#{transicaoStatusBean.statusDeIdSelectedItem}" >
+		                        	<p:ajax event="change" update="statusPara" onstart="$('#formz_statusPara_chzn').remove();" oncomplete="$('select').chosen();"/>
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusBean.statusDeList}" />  
 								</h:selectOneMenu>
 							</div>
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label">Status destino :</label>
+							<label class="control-label">Para :</label>
 							<div class="controls">
-								<h:selectOneMenu id="statusTo" data-placeholder="Selecione um status de destino ..." effect="fade" valueChangeListener="#{transicaoStatusBean.statusToValueChangeListener}" value="#{transicaoStatusBean.statusToSelectedItemId}">
-									<f:selectItem itemLabel="Selecione ..." itemValue="" />
-									<f:selectItems value="#{transicaoStatusBean.statusToList}" var="statusTo" itemLabel="#{statusTo.label}" itemValue="#{statusTo.value}" />
+						        <h:selectOneMenu id="statusPara" valueChangeListener="#{transicaoStatusBean.statusParaValueChangeListener}" effect="fade" value="#{transicaoStatusBean.statusParaIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusBean.statusParaList}" />  
 								</h:selectOneMenu>
 							</div>
 						</div>
 						
+						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+	
 						<div class="form-actions">
-							<p:commandButton value="#{transicaoStatusBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{transicaoStatusBean.save}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{transicaoStatusBean.showDeleteButton}"
-								actionListener="#{transicaoStatusBean.delete}" onclick="msgs.show();" oncomplete="$('select').chosen();"/>
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
-								actionListener="#{transicaoStatusBean.cancel}" oncomplete="$('select').chosen();" />
+							
+							<p:commandButton value="#{transicaoStatusBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusBean.save}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{transicaoStatusBean.showDeleteButton}" actionListener="#{transicaoStatusBean.delete}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{transicaoStatusBean.cancel}" immediate="true"/>
+					
 						</div>
 						
 					</h:form>
@@ -83,13 +95,24 @@
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="transicaoStatus" value="#{transicaoStatusBean.dataModel}"
+							<p:dataTable id="table" var="transicaoStatus"
+								value="#{transicaoStatusBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
-								rows="10" selection="#{transicaoStatusBean.transicaoStatusForm}" selectionMode="single" emptyMessage="Nenhuma status cadastrado">
+								rows="10" selection="#{transicaoStatusBean.transicaoStatusForm}" selectionMode="single" emptyMessage="Nenhum status cadastrado">
 								<p:ajax event="rowSelect" listener="#{transicaoStatusBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
 								<p:column headerText="Nome">
 									<h:outputText value="#{transicaoStatus.nome}" />
 								</p:column>
+								<p:column headerText="De">
+									<h:outputText value="#{transicaoStatus.statusDe.nome}" />
+								</p:column>
+								<p:column headerText="Par">
+									<h:outputText value="#{transicaoStatus.statusPara.nome}" />
+								</p:column>
+								<p:column headerText="Cliente">
+									<h:outputText value="#{transicaoStatus.cliente.nome}" />
+								</p:column>
+								
 							</p:dataTable>
 
 						</div>
@@ -100,7 +123,7 @@
 			</div>
 
 		</div>
-		
+
 	</ui:define>
 
 </ui:composition>

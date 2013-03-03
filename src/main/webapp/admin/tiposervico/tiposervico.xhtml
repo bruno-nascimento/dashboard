@@ -6,7 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:param name="bean" value="#{statusBean}" />
+	<ui:param name="bean" value="#{tipoServicoBean}" />
 
 	<ui:define name="content">
 	
@@ -19,7 +19,7 @@
 					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
 						<span class="icon"> <i class="icon icon-pencil"></i>
 						</span>
-						<h5>Inserir status</h5>
+						<h5>Inserir tipo de serviço</h5>
 					</div>
 					
 					<h:form id="formz" styleClass="form-horizontal">
@@ -27,27 +27,27 @@
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true" value="#{statusBean.statusForm.nome}" />
+								<p:inputText id="nome" required="true" value="#{tipoServicoBean.tipoServicoForm.nome}" />
 							</div>
 						</div>
 						
 						<div class="control-group">
 							<label class="control-label">Cliente :</label>
 							<div class="controls">
-						        <h:selectOneMenu id="cliente" valueChangeListener="#{statusBean.clienteValueChangeListener}" effect="fade" value="#{statusBean.clienteIdSelectedItem}" >
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{tipoServicoBean.clienteValueChangeListener}" effect="fade" value="#{tipoServicoBean.clienteIdSelectedItem}" >
 		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
-						            <f:selectItems value="#{statusBean.clienteList}" />  
+						            <f:selectItems value="#{tipoServicoBean.clienteList}" />  
 								</h:selectOneMenu>
 							</div>
 						</div>
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{statusBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{statusBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="#{tipoServicoBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{tipoServicoBean.save}" onclick="msgs.show();" />
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{statusBean.showDeleteButton}" actionListener="#{statusBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{tipoServicoBean.showDeleteButton}" actionListener="#{tipoServicoBean.delete}" onclick="msgs.show();" />
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{statusBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{tipoServicoBean.cancel}" immediate="true"/>
 					
 						</div>
 						
@@ -69,21 +69,21 @@
 						
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i></span>
-							<h5>Lista de status</h5>
+							<h5>Lista de tipos de serviço</h5>
 						</div>
 						
 						<div class="widget-content">
 							
-							<p:dataTable id="table" var="status"
-								value="#{statusBean.dataModel}"
+							<p:dataTable id="table" var="tipoServico"
+								value="#{tipoServicoBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
-								rows="10" selection="#{statusBean.statusForm}" selectionMode="single" emptyMessage="Nenhum status cadastrado">
-								<p:ajax event="rowSelect" listener="#{statusBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
+								rows="10" selection="#{tipoServicoBean.tipoServicoForm}" selectionMode="single" emptyMessage="Nenhum tipo de serviço cadastrado">
+								<p:ajax event="rowSelect" listener="#{tipoServicoBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
 								<p:column headerText="Nome">
-									<h:outputText value="#{status.nome}" />
+									<h:outputText value="#{tipoServico.nome}" />
 								</p:column>
 								<p:column headerText="Cliente">
-									<h:outputText value="#{status.cliente.nome}" />
+									<h:outputText value="#{tipoServico.cliente.nome}" />
 								</p:column>
 								
 							</p:dataTable>

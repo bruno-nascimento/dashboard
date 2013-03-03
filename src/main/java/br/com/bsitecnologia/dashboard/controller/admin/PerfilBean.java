@@ -16,20 +16,20 @@ import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
-import br.com.bsitecnologia.dashboard.dao.StatusDao;
+import br.com.bsitecnologia.dashboard.dao.PerfilDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
-import br.com.bsitecnologia.dashboard.model.Status;
+import br.com.bsitecnologia.dashboard.model.Perfil;
 
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class StatusBean extends BaseCrudBean<Status> implements Serializable {
+public class PerfilBean extends BaseCrudBean<Perfil> implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
-	@Inject private StatusDao statusDao;
-	@Inject @New private Status statusForm;
-	@Inject private DashboardDataModel<Status> dataModel;
+	@Inject private PerfilDao perfilDao;
+	@Inject @New private Perfil perfilForm;
+	@Inject private DashboardDataModel<Perfil> dataModel;
 	
 	@Inject private ClienteDao clienteDao;
 
@@ -43,24 +43,24 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){
-		statusForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
+		perfilForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
 
 	@Override
-	protected StatusDao getDao() {
-		return statusDao;
+	protected PerfilDao getDao() {
+		return perfilDao;
 	}
 
 	@Override
-	protected Status getFormEntity() {
-		return statusForm;
+	protected Perfil getFormEntity() {
+		return perfilForm;
 	}
 
 	@Override
-	protected void setFormEntity(Status tipoServico) {
-		statusForm = tipoServico;		
+	protected void setFormEntity(Perfil tipoServico) {
+		perfilForm = tipoServico;		
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 
 	@Override
 	protected void resetFormEntity() {
-		statusForm = new Status();
+		perfilForm = new Perfil();
 		clienteIdSelectedItem = null;
 	}
 	
@@ -82,20 +82,20 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	
 	@Override
 	protected void postRowSelect() {
-		clienteIdSelectedItem = statusForm.getCliente() != null ? statusForm.getCliente().getId().toString() : null;
+		clienteIdSelectedItem = perfilForm.getCliente() != null ? perfilForm.getCliente().getId().toString() : null;
 	}
 	
 	/* get&set */
 	
-	public Status getStatusForm() {
-		return statusForm;
+	public Perfil getPerfilForm() {
+		return perfilForm;
 	}
 
-	public void setStatusForm(Status statusForm) {
-		this.statusForm = statusForm;
+	public void setPerfilForm(Perfil perfilForm) {
+		this.perfilForm = perfilForm;
 	}
 	
-	public DashboardDataModel<Status> getDataModel() {
+	public DashboardDataModel<Perfil> getDataModel() {
 		return dataModel;
 	}
 	

@@ -1,0 +1,118 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{transicaoStatusPerfilBean}" />
+
+	<ui:define name="content">
+	
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+
+					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+						<span class="icon"> <i class="icon icon-pencil"></i>
+						</span>
+						<h5>Inserir transição status perfil</h5>
+					</div>
+					
+					<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Perfil :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="perfil" valueChangeListener="#{transicaoStatusPerfilBean.perfilValueChangeListener}" effect="fade" value="#{transicaoStatusPerfilBean.perfilIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusPerfilBean.perfilList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Transição de status :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="transicaoStatus" valueChangeListener="#{transicaoStatusPerfilBean.transicaoStatusValueChangeListener}" effect="fade" value="#{transicaoStatusPerfilBean.transicaoStatusIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusPerfilBean.transicaoStatusList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusPerfilBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusPerfilBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusPerfilBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+	
+						<div class="form-actions">
+							
+							<p:commandButton value="#{transicaoStatusPerfilBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.save}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{transicaoStatusPerfilBean.showDeleteButton}" actionListener="#{transicaoStatusPerfilBean.delete}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.cancel}" immediate="true"/>
+					
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de transições status perfil</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="transicaoStatusPerfil"
+								value="#{transicaoStatusPerfilBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{transicaoStatusPerfilBean.transicaoStatusPerfilForm}" selectionMode="single" emptyMessage="Nenhuma transicao status perfil cadastrado">
+								<p:ajax event="rowSelect" listener="#{transicaoStatusPerfilBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
+								<p:column headerText="Perfil">
+									<h:outputText value="#{transicaoStatusPerfil.perfil.nome}" />
+								</p:column>
+								<p:column headerText="Transicao de Status">
+									<h:outputText value="#{transicaoStatusPerfil.transicaoStatus.nome}" />
+								</p:column>
+								<p:column headerText="Cliente">
+									<h:outputText value="#{transicaoStatus.cliente.nome}" />
+								</p:column>
+								
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

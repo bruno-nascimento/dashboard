@@ -81,7 +81,7 @@ a:hover {
 }
 
 #header h1 {
-    background: url("#{resource['img/logoBSI_middle1.png']}") no-repeat scroll 0 0 transparent;
+    background: url("#{resource['img/logo.jpg']}") no-repeat scroll 0 0 transparent;
     height: 45px;
     left: 15px;
     line-height: 600px;

@@ -209,10 +209,14 @@ public class GenericJpaRepository<T extends BaseEntity, ID extends Serializable>
 	 */
 	@Override
 	public void delete(T entity) {
-		entity = entityManager.merge(entity);
-		entityManager.remove(entity);
-		entityManager.flush();
-		entityManager.clear();
+		try {
+			entity = entityManager.merge(entity);
+			entityManager.remove(entity);
+			entityManager.flush();
+			entityManager.clear();
+		} catch (Exception e) {
+			catchEvent.fire(new ExceptionToCatch(e));
+		}
 	}
 
 	/**

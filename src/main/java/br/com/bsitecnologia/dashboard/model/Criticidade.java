@@ -19,10 +19,10 @@ import javax.persistence.Table;
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
 @Entity
-@Table(name = "Status", catalog = "dashboard")
-public class Status implements Serializable, BaseEntity {
-
-	private static final long serialVersionUID = -4554195991608067482L;
+@Table(name = "Criticidade", catalog = "dashboard")
+public class Criticidade implements Serializable, BaseEntity {
+	
+	private static final long serialVersionUID = 4820165530864789201L;
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -36,30 +36,20 @@ public class Status implements Serializable, BaseEntity {
 	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "criticidade")
 	private List<Demanda> demandas = new ArrayList<Demanda>(0);
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "statusPara")
-	private List<TransicaoStatus> transicaoStatusPara = new ArrayList<TransicaoStatus>(0);
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "statusDe")
-	private List<TransicaoStatus> transicaoStatusDe = new ArrayList<TransicaoStatus>(0);
 
-	public Status() {
+	public Criticidade() {
 	}
 
-	public Status(String nome) {
+	public Criticidade(String nome) {
 		this.nome = nome;
 	}
 
-	public Status(Cliente cliente, String nome, List<Demanda> demandas,
-			List<TransicaoStatus> transicaoStatusPara,
-			List<TransicaoStatus> transicaoStatusDe) {
+	public Criticidade(Cliente cliente, String nome, List<Demanda> demandas) {
 		this.cliente = cliente;
 		this.nome = nome;
 		this.demandas = demandas;
-		this.transicaoStatusPara = transicaoStatusPara;
-		this.transicaoStatusDe = transicaoStatusDe;
 	}
 
 	public Integer getId() {
@@ -92,22 +82,6 @@ public class Status implements Serializable, BaseEntity {
 
 	public void setDemandas(List<Demanda> demandas) {
 		this.demandas = demandas;
-	}
-
-	public List<TransicaoStatus> getTransicaoStatusPara() {
-		return this.transicaoStatusPara;
-	}
-
-	public void setTransicaoStatusPara(List<TransicaoStatus> transicaoStatusPara) {
-		this.transicaoStatusPara = transicaoStatusPara;
-	}
-
-	public List<TransicaoStatus> getTransicaoStatusDe() {
-		return this.transicaoStatusDe;
-	}
-
-	public void setTransicaoStatusDe(List<TransicaoStatus> transicaoStatusDe) {
-		this.transicaoStatusDe = transicaoStatusDe;
 	}
 
 	@Override

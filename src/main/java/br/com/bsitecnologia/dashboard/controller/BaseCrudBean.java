@@ -10,6 +10,7 @@ import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 
 import org.primefaces.event.SelectEvent;
 
@@ -17,7 +18,9 @@ import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.controller.template.Buttons;
 import br.com.bsitecnologia.dashboard.dao.base.GenericJpaRepository;
+import br.com.bsitecnologia.dashboard.model.Usuario;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.ControleAcesso;
+import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
 import br.com.bsitecnologia.dashboard.util.Acao;
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
@@ -35,6 +38,7 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	private String saveButtonLabel = Buttons.SAVE.getLabel();
 	private boolean showDeleteButton = false;
 	private List<T> list;
+	@Inject @UsuarioLogado Usuario usuario;
 
 	
 	/*Metodos a serem implementados pelos beans, operações comuns a todos*/
@@ -218,6 +222,13 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	
 	public void setList(List<T> list) {
 		this.list = list;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

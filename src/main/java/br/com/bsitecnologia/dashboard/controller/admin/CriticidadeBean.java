@@ -16,20 +16,20 @@ import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
-import br.com.bsitecnologia.dashboard.dao.StatusDao;
+import br.com.bsitecnologia.dashboard.dao.CriticidadeDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
-import br.com.bsitecnologia.dashboard.model.Status;
+import br.com.bsitecnologia.dashboard.model.Criticidade;
 
 @Named
 @ConversationScoped
 @SuppressWarnings("unchecked")
-public class StatusBean extends BaseCrudBean<Status> implements Serializable {
+public class CriticidadeBean extends BaseCrudBean<Criticidade> implements Serializable {
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
-	@Inject private StatusDao statusDao;
-	@Inject @New private Status statusForm;
-	@Inject private DashboardDataModel<Status> dataModel;
+	@Inject private CriticidadeDao criticidadeDao;
+	@Inject @New private Criticidade criticidadeForm;
+	@Inject private DashboardDataModel<Criticidade> dataModel;
 	
 	@Inject private ClienteDao clienteDao;
 
@@ -43,24 +43,24 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){
-		statusForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
+		criticidadeForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
 
 	@Override
-	protected StatusDao getDao() {
-		return statusDao;
+	protected CriticidadeDao getDao() {
+		return criticidadeDao;
 	}
 
 	@Override
-	protected Status getFormEntity() {
-		return statusForm;
+	protected Criticidade getFormEntity() {
+		return criticidadeForm;
 	}
 
 	@Override
-	protected void setFormEntity(Status tipoServico) {
-		statusForm = tipoServico;		
+	protected void setFormEntity(Criticidade tipoServico) {
+		criticidadeForm = tipoServico;		
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 
 	@Override
 	protected void resetFormEntity() {
-		statusForm = new Status();
+		criticidadeForm = new Criticidade();
 		clienteIdSelectedItem = null;
 	}
 	
@@ -82,20 +82,20 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	
 	@Override
 	protected void postRowSelect() {
-		clienteIdSelectedItem = statusForm.getCliente() != null ? statusForm.getCliente().getId().toString() : null;
+		clienteIdSelectedItem = criticidadeForm.getCliente() != null ? criticidadeForm.getCliente().getId().toString() : null;
 	}
 	
 	/* get&set */
 	
-	public Status getStatusForm() {
-		return statusForm;
+	public Criticidade getCriticidadeForm() {
+		return criticidadeForm;
 	}
 
-	public void setStatusForm(Status statusForm) {
-		this.statusForm = statusForm;
+	public void setCriticidadeForm(Criticidade criticidadeForm) {
+		this.criticidadeForm = criticidadeForm;
 	}
 	
-	public DashboardDataModel<Status> getDataModel() {
+	public DashboardDataModel<Criticidade> getDataModel() {
 		return dataModel;
 	}
 	
