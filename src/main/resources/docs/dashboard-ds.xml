@@ -1,5 +1,5 @@
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
-    <datasource jndi-name="java:jboss/datasources/dashboard-ds" pool-name="dashboardPool" 
+    <datasource jndi-name="java:jboss/datasources/MysqlDS" pool-name="dashboardPool" 
     	enabled="true" use-java-context="true" jta="true">
         <connection-url>jdbc:mysql://localhost:3306/dashboard</connection-url>
         <driver>mysql-5-driver</driver>
