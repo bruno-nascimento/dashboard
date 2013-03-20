@@ -1,0 +1,105 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{areaSolicitanteBean}" />
+	
+
+	<ui:define name="content">
+	
+		<h1>#{usuarioLogado.nome}</h1>
+		
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+
+					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+						<span class="icon"> <i class="icon icon-pencil"></i>
+						</span>
+						<h5>Inserir area solicitante</h5>
+					</div>
+					
+					<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Nome :</label>
+							<div class="controls">
+								<p:inputText id="nome" required="true" value="#{areaSolicitanteBean.areaSolicitanteForm.nome}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{areaSolicitanteBean.clienteValueChangeListener}" effect="fade" value="#{areaSolicitanteBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{areaSolicitanteBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+	
+						<div class="form-actions">
+							
+							<p:commandButton value="#{areaSolicitanteBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.save}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{areaSolicitanteBean.showDeleteButton}" actionListener="#{areaSolicitanteBean.delete}" onclick="msgs.show();" />
+							
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.cancel}" immediate="true"/>
+					
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de areas solicitantes</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="areaSolicitante"
+								value="#{areaSolicitanteBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{areaSolicitanteBean.areaSolicitanteForm}" selectionMode="single" emptyMessage="Nenhum status cadastrado">
+								<p:ajax event="rowSelect" listener="#{areaSolicitanteBean.onRowSelect}" update=":formz" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz');"/>
+								<p:column headerText="Nome">
+									<h:outputText value="#{areaSolicitante.nome}" />
+								</p:column>
+								<p:column headerText="Cliente">
+									<h:outputText value="#{areaSolicitante.cliente.nome}" />
+								</p:column>
+								
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

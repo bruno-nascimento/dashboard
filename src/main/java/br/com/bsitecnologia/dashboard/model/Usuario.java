@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
@@ -48,6 +49,10 @@ public class Usuario implements Serializable, BaseEntity {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<Telefone> telefones = new ArrayList<Telefone>(0);
+	
+	@Transient
+	private boolean logado;
+
 
 	public Usuario() {
 	}
@@ -123,6 +128,14 @@ public class Usuario implements Serializable, BaseEntity {
 
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
+	}
+	
+	public boolean isLogado() {
+		return logado;
+	}
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
 	}
 
 	@Override

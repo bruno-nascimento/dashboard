@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.New;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,20 +21,17 @@ public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = 1540160644128909016L;
 
-	@Inject
-	@New
-	private Usuario usuario;
+	@Inject @New private Usuario usuario;
 	
 	@Inject UsuarioDao usuarioDao;
 	
 	public String login() {
-//		usuario = usuarioDao.authenticateUser(usuario);
-//		System.out.println(usuario.getLogin());
-//		if(usuario.isLogado()){
-//			return "/admin/cargo/cargo?faces-redirect=true";
-//		}else{
+		usuario = usuarioDao.authenticateUser(usuario);
+		if(usuario.isLogado()){
+			return "/dashboard/demandas?faces-redirect=true";
+		}else{
 			return "/login?faces-redirect=true";
-//		}
+		}
 	}
 	
 	public Usuario getUsuario() {
@@ -50,6 +48,13 @@ public class LoginBean implements Serializable {
 	@Named("usuarioLogado")
 	public Usuario getUsuarioLogado(){
 		return usuario;
+	}
+	
+	public String logout(){
+		usuario = new Usuario();
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/login?faces-redirect=true";
+		
 	}
 	
 }
