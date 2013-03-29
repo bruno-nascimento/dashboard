@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,6 +31,10 @@ public class Acao implements Serializable, BaseEntity {
 	
 	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "dominio")
+	private Dominio dominio;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "acao")
 	private List<PerfilAcaoDominio> perfilAcaoDominios = new ArrayList<PerfilAcaoDominio>(0);
@@ -67,6 +73,14 @@ public class Acao implements Serializable, BaseEntity {
 
 	public void setPerfilAcaoDominios(List<PerfilAcaoDominio> perfilAcaoDominios) {
 		this.perfilAcaoDominios = perfilAcaoDominios;
+	}
+	
+	public Dominio getDominio() {
+		return dominio;
+	}
+
+	public void setDominio(Dominio dominio) {
+		this.dominio = dominio;
 	}
 
 	@Override

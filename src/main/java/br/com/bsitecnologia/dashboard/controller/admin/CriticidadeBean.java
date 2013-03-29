@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
+import br.com.bsitecnologia.dashboard.controller.base.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;

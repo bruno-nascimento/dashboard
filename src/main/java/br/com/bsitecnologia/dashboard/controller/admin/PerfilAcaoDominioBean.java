@@ -11,8 +11,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
-import br.com.bsitecnologia.dashboard.controller.BaseCrudBean;
+import br.com.bsitecnologia.dashboard.controller.base.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.AcaoDao;
@@ -25,6 +27,7 @@ import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.Dominio;
 import br.com.bsitecnologia.dashboard.model.Perfil;
 import br.com.bsitecnologia.dashboard.model.PerfilAcaoDominio;
+import br.com.bsitecnologia.dashboard.service.PerfilAcaoDominioService;
 
 @Named
 @ConversationScoped
@@ -33,7 +36,7 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 	
 	private static final long serialVersionUID = -563351669224686839L;
 	
-	@Inject private PerfilAcaoDominioDao perfilAcaoDominio;
+	@Inject private PerfilAcaoDominioDao perfilAcaoDominioDao;
 	@Inject @New private PerfilAcaoDominio perfilAcaoDominioForm;
 	@Inject private DashboardDataModel<PerfilAcaoDominio> dataModel;
 	
@@ -52,18 +55,23 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 	@Inject private AcaoDao acaoDao;
 
 	private List<Acao> allAcaoFromDB;
-	private List<SelectItem> acaoList;
-	private String acaoIdSelectedItem;
 	
 	@Inject private DominioDao dominioDao;
 
 	private List<Dominio> allDominioFromDB;
-	private List<SelectItem> dominioList;
-	private String dominioIdSelectedItem;
+	
+	@Inject PerfilAcaoDominioService perfilAcaoDominioService;
+	
+	private TreeNode root;  
+    private TreeNode[] selectedNodes;
+
+	private List<PerfilAcaoDominio> selecionados;
 	
 	@PostConstruct
 	public void postConstruct(){
 		super.init();
+		root = new DefaultTreeNode("Root", null);
+		perfilAcaoDominioService.buildAcaoDominioTree(root, allDominioFromDB, allAcaoFromDB);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){
@@ -74,19 +82,11 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 		perfilAcaoDominioForm.setPerfil(getEntityFromValueChangeEvent(event, allPerfisFromDB));
 	}
 	
-	public void acaoValueChangeListener(ValueChangeEvent event){
-		perfilAcaoDominioForm.setAcao(getEntityFromValueChangeEvent(event, allAcaoFromDB));
-	}
-	
-	public void dominioValueChangeListener(ValueChangeEvent event){
-		perfilAcaoDominioForm.setDominio(getEntityFromValueChangeEvent(event, allDominioFromDB));
-	}
-	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
 
 	@Override
 	protected PerfilAcaoDominioDao getDao() {
-		return perfilAcaoDominio;
+		return perfilAcaoDominioDao;
 	}
 
 	@Override
@@ -109,8 +109,9 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 		perfilAcaoDominioForm = new PerfilAcaoDominio();
 		clienteIdSelectedItem = null;
 		perfilIdSelectedItem = null;
-		acaoIdSelectedItem = null;
-		dominioIdSelectedItem = null;
+		selectedNodes = null;
+		selecionados = null;
+		perfilAcaoDominioService.resetSelected(root);
 	}
 	
 	@Override
@@ -122,52 +123,42 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 		
 		clienteList = fillSelectItemList(allClientesFromDB);
 		perfilList = fillSelectItemList(allPerfisFromDB);
-		acaoList = fillSelectItemList(allAcaoFromDB);
-		dominioList = fillSelectItemList(allDominioFromDB);
 	}
 	
-	public List<SelectItem> getAcaoList() {
-		return acaoList;
+	@Override
+	public void save() {
+		Cliente cliente = clienteIdSelectedItem == null || clienteIdSelectedItem.equals("") ? null : getEntityById(Integer.valueOf(clienteIdSelectedItem), allClientesFromDB);
+		Perfil perfil = perfilIdSelectedItem == null || perfilIdSelectedItem.equals("") ? null : getEntityById(Integer.valueOf(perfilIdSelectedItem), allPerfisFromDB);
+		TreeNode[] selectedNodesTemp = selectedNodes;
+		List<PerfilAcaoDominio> selecionadosTemp = selecionados;
+		if(selecionadosTemp != null && selecionadosTemp.size() > 0){
+			this.delete(false);
+		}
+		for(PerfilAcaoDominio perfilAcaoDominio : perfilAcaoDominioService.prepareToSave(selectedNodesTemp, cliente, perfil)){
+			setFormEntity(perfilAcaoDominio);
+			super.save();
+		}
 	}
-
-	public void setAcaoList(List<SelectItem> acaoList) {
-		this.acaoList = acaoList;
+	
+	public void delete(){
+		delete(true);
 	}
-
-	public String getAcaoIdSelectedItem() {
-		return acaoIdSelectedItem;
-	}
-
-	public void setAcaoIdSelectedItem(String acaoIdSelectedItem) {
-		this.acaoIdSelectedItem = acaoIdSelectedItem;
-	}
-
-	public List<SelectItem> getDominioList() {
-		return dominioList;
-	}
-
-	public void setDominioList(List<SelectItem> dominioList) {
-		this.dominioList = dominioList;
-	}
-
-	public String getDominioIdSelectedItem() {
-		return dominioIdSelectedItem;
-	}
-
-	public void setDominioIdSelectedItem(String dominioIdSelectedItem) {
-		this.dominioIdSelectedItem = dominioIdSelectedItem;
-	}
-
-	public void setClienteList(List<SelectItem> clienteList) {
-		this.clienteList = clienteList;
+	
+	@Override
+	public void delete(boolean showDeleteMessages) {
+		for (PerfilAcaoDominio pad : selecionados) {
+			setFormEntity(pad);
+			super.delete(showDeleteMessages);
+		}
 	}
 
 	@Override
 	protected void postRowSelect() {
+		perfilAcaoDominioService.resetSelected(root);
+		selecionados = null;
 		clienteIdSelectedItem = perfilAcaoDominioForm.getCliente() != null ? perfilAcaoDominioForm.getCliente().getId().toString() : null;
 		perfilIdSelectedItem = perfilAcaoDominioForm.getPerfil() != null ? perfilAcaoDominioForm.getPerfil().getId().toString() : null;
-		acaoIdSelectedItem = perfilAcaoDominioForm.getAcao() != null ? perfilAcaoDominioForm.getAcao().getId().toString() : null;
-		dominioIdSelectedItem = perfilAcaoDominioForm.getDominio() != null ? perfilAcaoDominioForm.getDominio().getId().toString() : null;
+		selecionados = perfilAcaoDominioService.buildSelectedAcaoDominioTreeAndReturnSelected(perfilAcaoDominioForm, root);
 	}
 	
 	/* get&set */
@@ -216,6 +207,20 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 		this.perfilIdSelectedItem = perfilIdSelectedItem;
 	}
 	
+	public TreeNode getRoot() {
+		return root;
+	}
 	
+	public TreeNode[] getSelectedNodes() {  
+        return selectedNodes;  
+    }  
+  
+    public void setSelectedNodes(TreeNode[] selectedNodes) {  
+        this.selectedNodes = selectedNodes;  
+    }
+    
+	public void setClienteList(List<SelectItem> clienteList) {
+		this.clienteList = clienteList;
+	}
 	
 }

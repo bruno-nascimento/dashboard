@@ -13,16 +13,20 @@ public class UsuarioDao extends GenericJpaRepository<Usuario, Integer>{
 	
 	public Usuario authenticateUser(Usuario usuario){
 		try{
-			Query q = entityManager.createQuery("select usuario from Usuario usuario where usuario.email = :email and usuario.senha = :senha");
+			Query q = entityManager.createQuery("select usuario from Usuario usuario " +
+					"left join fetch usuario.perfil perfil " +
+					"left join fetch perfil.perfilAcaoDominios perfilAcaoDominios " +
+					"left join fetch perfilAcaoDominios.dominio " +
+					"left join fetch perfilAcaoDominios.acao " +
+					"where usuario.email = :email and usuario.senha = :senha");
 			q.setParameter("email", usuario.getEmail());
 			q.setParameter("senha", usuario.getSenha());//Sha512Crypt.Sha512_crypt(usuario.getSenha()));
 			usuario = (Usuario) q.getSingleResult();
-			usuario.setLogado(true);
 			return usuario;
 		} catch (Exception e) {
 			catchEvent.fire(new ExceptionToCatch(e));
 		}
-		return new Usuario();
+		return usuario;
 	}
 	
 }

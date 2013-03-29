@@ -11,9 +11,9 @@ import javax.inject.Named;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
-import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
 import br.com.bsitecnologia.dashboard.model.Usuario;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
+import br.com.bsitecnologia.dashboard.service.LoginService;
 
 @ConversationScoped
 @Named
@@ -23,23 +23,16 @@ public class LoginBean implements Serializable {
 
 	@Inject @New private Usuario usuario;
 	
-	@Inject UsuarioDao usuarioDao;
+	@Inject LoginService loginService;
 	
 	public String login() {
-		usuario = usuarioDao.authenticateUser(usuario);
-		if(usuario.isLogado()){
-			return "/dashboard/demandas?faces-redirect=true";
-		}else{
-			return "/login?faces-redirect=true";
-		}
+		usuario = loginService.authenticateUser(usuario);
+		return redirectUsuario(usuario);
 	}
 	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public String logout(){
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/login?faces-redirect=true";
 	}
 	
 	@SessionScoped
@@ -50,11 +43,19 @@ public class LoginBean implements Serializable {
 		return usuario;
 	}
 	
-	public String logout(){
-		usuario = new Usuario();
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	private String redirectUsuario(Usuario usuario){
+		if(usuario.isLogado()){
+			return "/dashboard/demandas?faces-redirect=true";
+		}
 		return "/login?faces-redirect=true";
-		
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }

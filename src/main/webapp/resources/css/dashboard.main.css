@@ -1429,3 +1429,11 @@ form {
 		text-align: center;
 	}
 }
+.btn{
+	padding: 0px;
+}
+
+.ui-tree .ui-tree-container{
+	height: auto;
+	width: auto;
+}

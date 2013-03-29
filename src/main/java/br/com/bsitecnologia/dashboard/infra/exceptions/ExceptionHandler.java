@@ -22,6 +22,11 @@ public class ExceptionHandler {
 		evt.abort();
 	}
 	
+	public void catchException(@Handles CaughtException<Exception> evt){
+		addMessage("Ops! Huston, we have a problem.", evt.getException().getLocalizedMessage());
+		evt.abort();
+	}
+	
 	private void addMessage(String summary, String detail){
 		FacesMessage fm =  new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
 		FacesContext.getCurrentInstance().addMessage(null, fm);

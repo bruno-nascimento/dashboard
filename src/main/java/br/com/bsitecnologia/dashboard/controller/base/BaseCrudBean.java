@@ -1,4 +1,4 @@
-package br.com.bsitecnologia.dashboard.controller;
+package br.com.bsitecnologia.dashboard.controller.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,9 +27,8 @@ import br.com.bsitecnologia.dashboard.util.BaseEntity;
 @SuppressWarnings("unchecked")
 public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable{
 
-	private static final long serialVersionUID = 1906091377786784028L;
+	private static final long serialVersionUID = 3226781095227842827L;
 	private final Class<T> entityClass = (Class<T>)getClass();	
-	
 	
 	/* Propriedades comuns a todos os beans - variaveis de layout e controle de tela */
 	
@@ -73,9 +72,13 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	}
 	
 	protected void loadList(){
-		list = getDao().findAll();
+		list = findAll();
 		getDataModel().setList(list);
 		postLoad();
+	}
+	
+	protected List<T> findAll(){
+		return getDao().findAll();
 	}
 	
 	@ControleAcesso(acao=Acao.INSERIR)
@@ -84,12 +87,21 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 			executePreInterceptors();
 			setFormEntity(getDao().save(getFormEntity()));
 			loadList();
-			addMessage(FacesMessage.SEVERITY_INFO, String.format("%s: %s", title, getFormEntity().getEntityDescription()), String.format("%s salvo(a) com sucesso.", title));
+			addMessage(FacesMessage.SEVERITY_INFO, String.format("%s: %s", title, getFormEntityFromDBList().getEntityDescription()), String.format("%s salvo(a) com sucesso.", title));
 			saveButtonLabel = Buttons.SAVE.getLabel();
 			showDeleteButton = false;
 			executePostInterceptors();
 			resetFormEntity();
 		}
+	}
+	
+	private T getFormEntityFromDBList(){
+		for(T t : list){
+			if(t.getId().equals(getFormEntity().getId())){
+				return t;
+			}
+		}
+		return null;
 	}
 	
 	private void executePostInterceptors() {
@@ -118,11 +130,17 @@ public abstract class BaseCrudBean<T extends BaseEntity> implements Serializable
 	}
 	
 	public void delete(){
+		delete(true);
+	}
+	
+	public void delete(boolean showMessage){
 		if(deleteValidation()){
 			preDelete();
 			getDao().delete(getFormEntity());
+			if(showMessage){
+				addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getFormEntityFromDBList().getEntityDescription()), String.format("%s deletado(a) com sucesso.", title));
+			}
 			loadList();
-			addMessage(FacesMessage.SEVERITY_INFO,  String.format("%s: %s", title, getFormEntity().getEntityDescription()), String.format("%s deletado(a) com sucesso.", title));
 			saveButtonLabel = Buttons.SAVE.getLabel();
 			showDeleteButton = false;
 			postDelete();

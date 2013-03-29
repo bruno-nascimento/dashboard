@@ -45,22 +45,16 @@
 						</div>
 						
 						<div class="control-group">
-							<label class="control-label">Ação :</label>
+							<label class="control-label">Dominio / Ação :</label>
 							<div class="controls">
-						        <h:selectOneMenu id="acao" valueChangeListener="#{perfilAcaoDominioBean.acaoValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.acaoIdSelectedItem}" >
-		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
-						            <f:selectItems value="#{perfilAcaoDominioBean.acaoList}" />  
-								</h:selectOneMenu>
-							</div>
-						</div>
-						
-						<div class="control-group">
-							<label class="control-label">Dominio :</label>
-							<div class="controls">
-						        <h:selectOneMenu id="dominio" valueChangeListener="#{perfilAcaoDominioBean.dominioValueChangeListener}" effect="fade" value="#{perfilAcaoDominioBean.dominioIdSelectedItem}" >
-		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
-						            <f:selectItems value="#{perfilAcaoDominioBean.dominioList}" />  
-								</h:selectOneMenu>
+								<p:tree value="#{perfilAcaoDominioBean.root}" var="node" id="checkboxTree" selectionMode="checkbox" selection="#{perfilAcaoDominioBean.selectedNodes}">  
+							        <p:treeNode type="Dominio">  
+							            <h:outputText value="#{node.entityDescription}"/>  
+							        </p:treeNode>  
+							        <p:treeNode type="Acao">  
+							            <h:outputText value="#{node.entityDescription}"/>  
+							        </p:treeNode>  
+							    </p:tree>  
 							</div>
 						</div>
 						
@@ -70,7 +64,7 @@
 							
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{perfilAcaoDominioBean.showDeleteButton}" actionListener="#{perfilAcaoDominioBean.delete}" onclick="msgs.show();" />
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.cancel}" oncomplete="$('select').chosen();"/>
 					
 						</div>
 						
@@ -105,11 +99,11 @@
 								<p:column headerText="Perfil">
 									<h:outputText value="#{perfilAcaoDominio.perfil.nome}" />
 								</p:column>
-								<p:column headerText="Ação">
-									<h:outputText value="#{perfilAcaoDominio.acao.nome}" />
-								</p:column>
 								<p:column headerText="Dominio">
 									<h:outputText value="#{perfilAcaoDominio.dominio.nome}" />
+								</p:column>
+								<p:column headerText="Ação">
+									<h:outputText value="#{perfilAcaoDominio.acao.nome}" />
 								</p:column>
 								<p:column headerText="Cliente">
 									<h:outputText value="#{perfilAcaoDominio.cliente.nome}" />

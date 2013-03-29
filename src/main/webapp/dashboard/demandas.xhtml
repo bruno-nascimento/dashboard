@@ -12,6 +12,9 @@
 	<ui:define name="content">
 	
 		<h1>#{usuarioLogado.nome}</h1>
+		<h1>#{usuarioLogado.perfil.perfilAcaoDominios.get(0).entityDescription}</h1>
+		<h1>#{usuarioLogado.perfil.perfilAcaoDominios.get(0).dominio.nome}</h1>
+		<h1>#{usuarioLogado.perfil.perfilAcaoDominios.get(0).acao.nome}</h1>
 		
 		<div class="row-fluid">
 

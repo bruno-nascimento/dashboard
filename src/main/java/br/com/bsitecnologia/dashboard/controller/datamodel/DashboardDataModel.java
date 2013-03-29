@@ -33,7 +33,10 @@ public class DashboardDataModel<T extends BaseEntity> extends ListDataModel<T> i
 	
 	@Override
 	public T getRowData(String rowKey) {
-		return (T) entityManager.find(entityClass, Integer.valueOf(rowKey));
+		if(rowKey != null){
+			return (T) entityManager.find(entityClass, Integer.valueOf(rowKey));
+		}
+		return null;
 	}
 
 }

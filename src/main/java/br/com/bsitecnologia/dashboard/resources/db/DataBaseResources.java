@@ -27,7 +27,6 @@ public class DataBaseResources {
 	EntityManager entityManager;
 
 	@Produces
-	@DashboardDB
 	@PersistenceUnit
 	EntityManagerFactory entityManagerFactory;
 }
