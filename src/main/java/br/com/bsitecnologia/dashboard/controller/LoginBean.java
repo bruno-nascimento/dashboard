@@ -21,12 +21,12 @@ public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = 1540160644128909016L;
 
-	@Inject @New private Usuario usuario;
+	@Inject @New private Usuario usuarioLogado;
 	
 	@Inject LoginService loginService;
 	
 	public String login() {
-		usuario = loginService.authenticateUser(usuario);
+		usuarioLogado = loginService.authenticateUser(usuarioLogado);
 		return redirectUsuario();
 	}
 	
@@ -35,11 +35,12 @@ public class LoginBean implements Serializable {
 		return "/login?faces-redirect=true";
 	}
 	
+	@SessionScoped
 	@Produces
 	@UsuarioLogado
-	@SessionScoped
+	@Named("usuarioLogado")
 	public Usuario getUsuarioLogado(){
-		return usuario;
+		return usuarioLogado;
 	}
 	
 	private String redirectUsuario(){
@@ -50,11 +51,11 @@ public class LoginBean implements Serializable {
 	}
 	
 	public Usuario getUsuario() {
-		return usuario;
+		return usuarioLogado;
 	}
 
 	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+		this.usuarioLogado = usuario;
 	}
 	
 }
