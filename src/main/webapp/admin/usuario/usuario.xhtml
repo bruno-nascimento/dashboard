@@ -16,13 +16,13 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir usuário</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{usuarioBean.usuarioForm.id eq null ? "Inserir" :"Editar"} usuário</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Cliente :</label>
@@ -47,31 +47,32 @@
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true" value="#{usuarioBean.usuarioForm.nome}" />
+								<p:inputText id="nome" value="#{usuarioBean.usuarioForm.nome}" />
 							</div>
 						</div>
 						
 						<div class="control-group">
 							<label class="control-label">Email :</label>
 							<div class="controls">
-								<p:inputText id="email" required="true" value="#{usuarioBean.usuarioForm.email}" />
+								<p:inputText id="email" value="#{usuarioBean.usuarioForm.email}" />
 							</div>
 						</div>					
 
 						<div class="control-group">
 							<label class="control-label">Senha :</label>
 							<div class="controls">
-								<p:password id="senha" required="true" value="#{usuarioBean.usuarioForm.senha}" />
+								<p:password id="senha" value="#{usuarioBean.usuarioForm.senha}" />
 							</div>
 						</div>					
 		
 						<div class="form-actions">
 							
-							<p:commandButton value="#{usuarioBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{usuarioBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{usuarioBean.salvar}" onclick="msgs.show();" rendered="#{usuarioBean.usuarioForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{usuarioBean.editar}" onclick="msgs.show();" rendered="#{usuarioBean.usuarioForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{usuarioBean.showDeleteButton}" actionListener="#{usuarioBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{usuarioBean.delete}" onclick="msgs.show();" rendered="#{usuarioBean.usuarioForm.id ne null}" />
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{usuarioBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{usuarioBean.cancel}" oncomplete="$('select').chosen();"/>
 					
 						</div>
 						

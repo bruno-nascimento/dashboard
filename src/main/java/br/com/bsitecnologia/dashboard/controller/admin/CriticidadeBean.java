@@ -19,6 +19,7 @@ import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.CriticidadeDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.Criticidade;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 
 @Named
 @ConversationScoped
@@ -39,7 +40,7 @@ public class CriticidadeBean extends BaseCrudBean<Criticidade> implements Serial
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.CRITICIDADE);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

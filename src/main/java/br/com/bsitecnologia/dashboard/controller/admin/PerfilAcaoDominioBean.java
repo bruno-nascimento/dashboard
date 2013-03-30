@@ -25,6 +25,7 @@ import br.com.bsitecnologia.dashboard.dao.PerfilDao;
 import br.com.bsitecnologia.dashboard.model.Acao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.Dominio;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Perfil;
 import br.com.bsitecnologia.dashboard.model.PerfilAcaoDominio;
 import br.com.bsitecnologia.dashboard.service.PerfilAcaoDominioService;
@@ -69,7 +70,7 @@ public class PerfilAcaoDominioBean extends BaseCrudBean<PerfilAcaoDominio> imple
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.PERFIL_ACAO_DOMINIO);
 		root = new DefaultTreeNode("Root", null);
 		perfilAcaoDominioService.buildAcaoDominioTree(root, allDominioFromDB, allAcaoFromDB);
 	}

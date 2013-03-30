@@ -16,13 +16,13 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir perfil / ação / dominio</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{perfilAcaoDominioBean.perfilAcaoDominioForm.id eq null ? "Inserir" :"Editar"} perfil / ação / dominio</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Cliente :</label>
@@ -60,9 +60,10 @@
 						
 						<div class="form-actions">
 							
-							<p:commandButton value="#{perfilAcaoDominioBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.salvar}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.editar}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{perfilAcaoDominioBean.showDeleteButton}" actionListener="#{perfilAcaoDominioBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.delete}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id ne null}"/>
 							
 							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.cancel}" oncomplete="$('select').chosen();"/>
 					

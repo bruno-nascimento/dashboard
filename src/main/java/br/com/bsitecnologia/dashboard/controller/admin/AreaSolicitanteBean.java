@@ -20,6 +20,7 @@ import br.com.bsitecnologia.dashboard.dao.AreaSolicitanteDao;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.model.AreaSolicitante;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.resources.db.DashboardDB;
 
 @Named
@@ -45,7 +46,7 @@ public class AreaSolicitanteBean extends BaseCrudBean<AreaSolicitante> implement
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.AREA_SOLICITANTE);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

@@ -18,6 +18,7 @@ import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.StatusDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Status;
 
 @Named
@@ -39,7 +40,7 @@ public class StatusBean extends BaseCrudBean<Status> implements Serializable {
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.STATUS);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

@@ -20,6 +20,7 @@ import br.com.bsitecnologia.dashboard.dao.PerfilDao;
 import br.com.bsitecnologia.dashboard.dao.TransicaoStatusDao;
 import br.com.bsitecnologia.dashboard.dao.TransicaoStatusPerfilDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Perfil;
 import br.com.bsitecnologia.dashboard.model.TransicaoStatus;
 import br.com.bsitecnologia.dashboard.model.TransicaoStatusPerfil;
@@ -52,13 +53,11 @@ public class TransicaoStatusPerfilBean extends BaseCrudBean<TransicaoStatusPerfi
 	private List<Perfil> allPerfilFromDB;
 	private List<SelectItem> perfilList;
 	private String perfilIdSelectedItem;
-	
-	
-    
+
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.TRANSICAO_STATUS_PERFIL);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

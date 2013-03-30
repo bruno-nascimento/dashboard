@@ -2,10 +2,13 @@ package br.com.bsitecnologia.dashboard.service;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
 import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
 import br.com.bsitecnologia.dashboard.model.Usuario;
+import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
 
 public class LoginService implements Serializable{
 	
@@ -15,8 +18,6 @@ public class LoginService implements Serializable{
 	
 	public Usuario authenticateUser(Usuario usuario) {
 		usuario = usuarioDao.authenticateUser(usuario);
-//		usuario.getPerfil();
-//		usuario.getPerfil().getPerfilAcaoDominios().get(0).getDominio().getNome();
 		usuario.setLogado(usuarioLoginState(usuario));
 		return usuario;
 	}

@@ -20,6 +20,7 @@ import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.StatusDao;
 import br.com.bsitecnologia.dashboard.dao.TransicaoStatusDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Status;
 import br.com.bsitecnologia.dashboard.model.TransicaoStatus;
 
@@ -28,8 +29,8 @@ import br.com.bsitecnologia.dashboard.model.TransicaoStatus;
 @SuppressWarnings("unchecked")
 public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implements Serializable {
 	
-	private static final long serialVersionUID = -563351669224686839L;
-	
+	private static final long serialVersionUID = 398596340486668576L;
+
 	@Inject private TransicaoStatusDao transicaoStatusDao;
 	@Inject @New private TransicaoStatus transicaoStatusForm;
 	@Inject private DashboardDataModel<TransicaoStatus> dataModel;
@@ -50,7 +51,7 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implement
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.TRANSICAO_STATUS);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

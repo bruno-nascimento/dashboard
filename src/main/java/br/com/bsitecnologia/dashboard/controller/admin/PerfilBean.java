@@ -18,6 +18,7 @@ import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.PerfilDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Perfil;
 
 @Named
@@ -39,7 +40,7 @@ public class PerfilBean extends BaseCrudBean<Perfil> implements Serializable {
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.PERFIL);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

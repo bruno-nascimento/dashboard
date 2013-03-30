@@ -16,18 +16,18 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir status</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{statusBean.statusForm.id eq null ? "Inserir" :"Editar"} status</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true" value="#{statusBean.statusForm.nome}" />
+								<p:inputText id="nome" value="#{statusBean.statusForm.nome}" />
 							</div>
 						</div>
 						
@@ -43,11 +43,12 @@
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{statusBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{statusBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{statusBean.salvar}" onclick="msgs.show();" rendered="#{statusBean.statusForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{statusBean.editar}" onclick="msgs.show();" rendered="#{statusBean.statusForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{statusBean.showDeleteButton}" actionListener="#{statusBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{statusBean.delete}" onclick="msgs.show();" rendered="#{statusBean.statusForm.id ne null}" />
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{statusBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{statusBean.cancel}" oncomplete="$('select').chosen();"/>
 					
 						</div>
 						

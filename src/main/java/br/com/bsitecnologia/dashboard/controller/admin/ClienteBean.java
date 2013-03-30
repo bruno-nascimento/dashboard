@@ -14,6 +14,7 @@ import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 
 @Named
 @ConversationScoped
@@ -28,7 +29,8 @@ public class ClienteBean extends BaseCrudBean<Cliente> implements Serializable {
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.CLIENTE);
+		setTitle(DominioEnum.CLIENTE.getDescricao());
 	}
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/

@@ -16,18 +16,18 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir criticidade</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{criticidadeBean.criticidadeForm.id eq null ? "Inserir" :"Editar"} criticidade</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true" value="#{criticidadeBean.criticidadeForm.nome}" />
+								<p:inputText id="nome" value="#{criticidadeBean.criticidadeForm.nome}" />
 							</div>
 						</div>
 						
@@ -43,11 +43,12 @@
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{criticidadeBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.salvar}" onclick="msgs.show();" rendered="#{criticidadeBean.criticidadeForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.editar}" onclick="msgs.show();" rendered="#{criticidadeBean.criticidadeForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{criticidadeBean.showDeleteButton}" actionListener="#{criticidadeBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.delete}" onclick="msgs.show();" rendered="#{criticidadeBean.criticidadeForm.id ne null}"/>
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.cancel}" />
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{criticidadeBean.cancel}" oncomplete="$('select').chosen();"/>
 					
 						</div>
 						

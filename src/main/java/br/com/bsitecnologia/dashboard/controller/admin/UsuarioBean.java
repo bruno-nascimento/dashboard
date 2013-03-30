@@ -19,6 +19,7 @@ import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.PerfilDao;
 import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Perfil;
 import br.com.bsitecnologia.dashboard.model.Usuario;
 
@@ -47,7 +48,7 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.USUARIO);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

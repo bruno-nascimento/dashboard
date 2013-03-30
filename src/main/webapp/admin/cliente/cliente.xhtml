@@ -16,26 +16,27 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir cliente</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{clienteBean.clienteForm.id eq null ? "Inserir" :"Editar"} cliente</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true"
-									value="#{clienteBean.clienteForm.nome}" />
+								<p:inputText id="nome" value="#{clienteBean.clienteForm.nome}" />
 							</div>
 						</div>
-	
+						
 						<div class="form-actions">
-							<p:commandButton value="#{clienteBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse"
-								actionListener="#{clienteBean.save}" onclick="msgs.show();" />
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{clienteBean.showDeleteButton}"
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse"
+								actionListener="#{clienteBean.salvar}" onclick="msgs.show();" rendered="#{clienteBean.clienteForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse"
+								actionListener="#{clienteBean.editar}" onclick="msgs.show();" rendered="#{clienteBean.clienteForm.id ne null}"/>
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{clienteBean.clienteForm.id ne null}"
 								actionListener="#{clienteBean.delete}" onclick="msgs.show();" />
 							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse"
 								actionListener="#{clienteBean.cancel}" />

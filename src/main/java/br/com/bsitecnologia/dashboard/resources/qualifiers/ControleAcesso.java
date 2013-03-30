@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 
-import br.com.bsitecnologia.dashboard.util.Acao;
+import br.com.bsitecnologia.dashboard.model.AcaoEnum;
 
 @InterceptorBinding
 @Inherited
@@ -21,5 +21,5 @@ import br.com.bsitecnologia.dashboard.util.Acao;
 @Documented
 public @interface ControleAcesso {
 	@Nonbinding
-	Acao acao() default Acao.VISUALIZAR;
+	AcaoEnum acao() default AcaoEnum.LISTAR;
 }

@@ -16,18 +16,18 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir area solicitante</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{areaSolicitanteBean.areaSolicitanteForm.id eq null ? "Inserir" :"Editar"} área solicitante</h5>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Nome :</label>
 							<div class="controls">
-								<p:inputText id="nome" required="true" value="#{areaSolicitanteBean.areaSolicitanteForm.nome}" />
+								<p:inputText id="nome" value="#{areaSolicitanteBean.areaSolicitanteForm.nome}" />
 							</div>
 						</div>
 						
@@ -43,11 +43,12 @@
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{areaSolicitanteBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.salvar}" onclick="msgs.show();" rendered="#{areaSolicitanteBean.areaSolicitanteForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.editar}" onclick="msgs.show();" rendered="#{areaSolicitanteBean.areaSolicitanteForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{areaSolicitanteBean.showDeleteButton}" actionListener="#{areaSolicitanteBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.delete}" onclick="msgs.show();" rendered="#{areaSolicitanteBean.areaSolicitanteForm.id ne null}"/>
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.cancel}" oncomplete="$('select').chosen();"/>
 					
 						</div>
 						

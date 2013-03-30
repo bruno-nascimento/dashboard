@@ -18,6 +18,7 @@ import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.dao.TipoServicoDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
+import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.TipoServico;
 
 @Named
@@ -39,7 +40,7 @@ public class TipoServicoBean extends BaseCrudBean<TipoServico> implements Serial
 	
 	@PostConstruct
 	public void postConstruct(){
-		super.init();
+		super.init(DominioEnum.TIPO_SERVICO);
 	}
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){

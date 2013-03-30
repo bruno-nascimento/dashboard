@@ -27,7 +27,7 @@ public class LoginBean implements Serializable {
 	
 	public String login() {
 		usuario = loginService.authenticateUser(usuario);
-		return redirectUsuario(usuario);
+		return redirectUsuario();
 	}
 	
 	public String logout(){
@@ -35,17 +35,16 @@ public class LoginBean implements Serializable {
 		return "/login?faces-redirect=true";
 	}
 	
-	@SessionScoped
 	@Produces
 	@UsuarioLogado
-	@Named("usuarioLogado")
+	@SessionScoped
 	public Usuario getUsuarioLogado(){
 		return usuario;
 	}
 	
-	private String redirectUsuario(Usuario usuario){
-		if(usuario.isLogado()){
-			return "/dashboard/demandas?faces-redirect=true";
+	private String redirectUsuario(){
+		if(getUsuarioLogado().isLogado()){
+			return "/admin/cliente/cliente?faces-redirect=true";
 		}
 		return "/login?faces-redirect=true";
 	}

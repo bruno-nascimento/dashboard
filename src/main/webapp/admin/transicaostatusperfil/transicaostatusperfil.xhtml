@@ -16,13 +16,13 @@
 			
 				<div class="widget-box">
 
-					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
-						<span class="icon"> <i class="icon icon-pencil"></i>
-						</span>
-						<h5>Inserir transição status perfil</h5>
-					</div>
-					
 					<h:form id="formz" styleClass="form-horizontal">
+
+						<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+							<span class="icon"> <i class="icon icon-pencil"></i>
+							</span>
+							<h5>#{transicaoStatusPerfilBean.transicaoStatusPerfilForm.id eq null ? "Inserir" :"Editar"} associação de transição de status e perfil</h5>
+						</div>					
 					
 						<div class="control-group">
 							<label class="control-label">Perfil :</label>
@@ -56,11 +56,12 @@
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{transicaoStatusPerfilBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.salvar}" onclick="msgs.show();" rendered="#{transicaoStatusPerfilBean.transicaoStatusPerfilForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.editar}" onclick="msgs.show();" rendered="#{transicaoStatusPerfilBean.transicaoStatusPerfilForm.id ne null}"/>
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{transicaoStatusPerfilBean.showDeleteButton}" actionListener="#{transicaoStatusPerfilBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.delete}" onclick="msgs.show();" />
 							
-							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.cancel}" immediate="true"/>
+							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.cancel}" oncomplete="$('select').chosen();" />
 					
 						</div>
 						

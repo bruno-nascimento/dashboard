@@ -9,14 +9,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.inject.Qualifier;
 
 @Qualifier
 @Target({ TYPE, METHOD, PARAMETER, FIELD })
 @Retention(RUNTIME)
-@SessionScoped
 @Named("usuarioLogado")
 public @interface UsuarioLogado {
 
