@@ -25,7 +25,7 @@
 					<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
 						<span class="icon"> <i class="icon icon-pencil"></i>
 						</span>
-						<h5>Inserir area solicitante</h5>
+						<h5>DASHBOARD DEMANADAS !!!</h5>
 					</div>
 					
 					<h:form id="formz" styleClass="form-horizontal">
@@ -49,9 +49,9 @@
 	
 						<div class="form-actions">
 							
-							<p:commandButton value="#{areaSolicitanteBean.saveButtonLabel}" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.save}" onclick="msgs.show();" />
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.save}" onclick="msgs.show();" />
 							
-							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" rendered="#{areaSolicitanteBean.showDeleteButton}" actionListener="#{areaSolicitanteBean.delete}" onclick="msgs.show();" />
+							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.delete}" onclick="msgs.show();" />
 							
 							<p:commandButton value="Cancelar" update=":formz" styleClass="btn btn-inverse" actionListener="#{areaSolicitanteBean.cancel}" immediate="true"/>
 					

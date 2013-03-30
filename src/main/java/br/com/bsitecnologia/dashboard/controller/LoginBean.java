@@ -9,13 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
-
 import br.com.bsitecnologia.dashboard.model.Usuario;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
 import br.com.bsitecnologia.dashboard.service.LoginService;
 
-@ConversationScoped
+@SessionScoped
 @Named
 public class LoginBean implements Serializable {
 	
@@ -35,7 +33,6 @@ public class LoginBean implements Serializable {
 		return "/login?faces-redirect=true";
 	}
 	
-	@SessionScoped
 	@Produces
 	@UsuarioLogado
 	@Named("usuarioLogado")

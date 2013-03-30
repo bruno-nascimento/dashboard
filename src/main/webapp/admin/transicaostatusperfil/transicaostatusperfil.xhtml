@@ -23,6 +23,16 @@
 							</span>
 							<h5>#{transicaoStatusPerfilBean.transicaoStatusPerfilForm.id eq null ? "Inserir" :"Editar"} associação de transição de status e perfil</h5>
 						</div>					
+
+						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusPerfilBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusPerfilBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusPerfilBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
 					
 						<div class="control-group">
 							<label class="control-label">Perfil :</label>
@@ -44,16 +54,6 @@
 							</div>
 						</div>
 						
-						<div class="control-group">
-							<label class="control-label">Cliente :</label>
-							<div class="controls">
-						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusPerfilBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusPerfilBean.clienteIdSelectedItem}" >
-		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
-						            <f:selectItems value="#{transicaoStatusPerfilBean.clienteList}" />  
-								</h:selectOneMenu>
-							</div>
-						</div>
-	
 						<div class="form-actions">
 							
 							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{transicaoStatusPerfilBean.salvar}" onclick="msgs.show();" rendered="#{transicaoStatusPerfilBean.transicaoStatusPerfilForm.id eq null}"/>
