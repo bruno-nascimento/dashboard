@@ -3,6 +3,7 @@ package br.com.bsitecnologia.dashboard.infra.filters;
 import java.io.Serializable;
 
 import javax.enterprise.event.Event;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -18,17 +19,17 @@ import br.com.bsitecnologia.dashboard.model.PerfilAcaoDominio;
 import br.com.bsitecnologia.dashboard.model.Usuario;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.ControleAcesso;
 import br.com.bsitecnologia.dashboard.resources.qualifiers.UsuarioLogado;
+import br.com.bsitecnologia.dashboard.util.BaseEntity;
 
 @ControleAcesso
 @Interceptor
-@SuppressWarnings("rawtypes")
 public class ControleAcessoInterceptor implements Serializable{
 
 	private static final long serialVersionUID = 5657743725393720210L;
 	
-	@UsuarioLogado
 	@Inject
-	Usuario usuarioLogado;
+	@UsuarioLogado
+	Instance<Usuario> usuarioLogado;
 	
 	@Inject
 	protected Event<ExceptionToCatch> catchEvent;
@@ -36,7 +37,7 @@ public class ControleAcessoInterceptor implements Serializable{
 	@AroundInvoke
 	public Object intercept(InvocationContext ic) throws Exception {
 		
-		BaseBean bean = (BaseBean)ic.getTarget();
+		BaseBean<? extends BaseEntity> bean = (BaseBean<?>)ic.getTarget();
 		DominioEnum dominio = bean.getDominio();
 		AcaoEnum acao = ic.getMethod().getAnnotation(ControleAcesso.class).acao();
 		if(!checkUsuarioLogadoAuthForInterceptedAcaoDominio(dominio, acao)){
@@ -47,8 +48,7 @@ public class ControleAcessoInterceptor implements Serializable{
 	}
 	
 	private boolean checkUsuarioLogadoAuthForInterceptedAcaoDominio(DominioEnum dominio, AcaoEnum acao){
-		
-		for(PerfilAcaoDominio pad : usuarioLogado.getPerfil().getPerfilAcaoDominios()){
+		for(PerfilAcaoDominio pad : usuarioLogado.get().getPerfil().getPerfilAcaoDominios()){
 			if(pad.getDominio().getId().equals(dominio.getId()) && pad.getAcao().getId().equals(acao.getId())){
 				return true;
 			}

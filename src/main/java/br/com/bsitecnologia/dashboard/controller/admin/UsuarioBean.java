@@ -73,8 +73,8 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	}
 
 	@Override
-	protected void setFormEntity(Usuario tipoServico) {
-		usuarioForm = tipoServico;		
+	protected void setFormEntity(Usuario usuarioForm) {
+		this.usuarioForm = usuarioForm;		
 	}
 
 	@Override
@@ -149,7 +149,6 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	public void setPerfilIdSelectedItem(String perfilIdSelectedItem) {
 		this.perfilIdSelectedItem = perfilIdSelectedItem;
 	}
-	
 	
 	
 }

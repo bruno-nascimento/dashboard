@@ -26,7 +26,7 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 	private final BreadcrumbEnum[] breadcrumb = setBreadcrumbArray();
 	private DominioEnum dominio;
 	
-	@UsuarioLogado @Inject Usuario usuario;
+	@UsuarioLogado @Inject Usuario usuarioLogado;
 	
 	/*Metodos a serem implementados pelos beans, operações comuns a todos*/
 	
@@ -72,11 +72,11 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 		return dominio;
 	}
 	
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
 	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 }

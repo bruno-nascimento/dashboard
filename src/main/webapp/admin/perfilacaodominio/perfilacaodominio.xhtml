@@ -60,8 +60,8 @@
 						
 						<div class="form-actions">
 							
-							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.salvar}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id eq null}"/>
-							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.editar}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id ne null}"/>
+							<p:commandButton value="Salvar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.save}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.save}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id ne null}"/>
 							
 							<p:commandButton value="Deletar" update=":formz,:table_form" styleClass="btn btn-inverse" actionListener="#{perfilAcaoDominioBean.delete}" onclick="msgs.show();" rendered="#{perfilAcaoDominioBean.perfilAcaoDominioForm.id ne null}"/>
 							

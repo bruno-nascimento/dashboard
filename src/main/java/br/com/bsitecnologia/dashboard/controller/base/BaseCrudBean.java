@@ -186,7 +186,9 @@ public abstract class BaseCrudBean<T extends BaseEntity> extends BaseBean<T> imp
 	/*get&set*/
 	
 	public boolean persistMethodIsUpdate(){
-		return null != getFormEntity() && getFormEntity().getId() != null || getFormEntity().getId() != 0;
+		boolean a = null != getFormEntity();
+		boolean b = getFormEntity().getId() != null;
+		return a && b;
 	}
 	
 	public List<T> getList() {
