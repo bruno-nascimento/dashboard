@@ -1,5 +1,10 @@
 package br.com.bsitecnologia.dashboard.model;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
+
+@Named
+@ApplicationScoped
 public enum AcaoEnum {
 	
 	INSERIR(1, "Inserir", null), EDITAR(2, "Editar", null),

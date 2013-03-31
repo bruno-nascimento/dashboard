@@ -7,4 +7,9 @@
 		<phase-listener>br.com.bsitecnologia.dashboard.infra.filters.security.SecurityPhaseListener</phase-listener>
 	</lifecycle>
 
+	<converter>
+		<converter-for-class>br.com.bsitecnologia.dashboard.model.DominioEnum</converter-for-class>
+		<converter-class>javax.faces.convert.EnumConverter</converter-class>
+	</converter>  
+
 </faces-config>

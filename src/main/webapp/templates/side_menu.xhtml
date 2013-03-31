@@ -4,43 +4,67 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
 	<h:form>
 		<div id="sidebar">
-			<ul style="display: block; ">
-				<li>
-					<h:commandLink value="" action="/dashboard/demandas?faces-redirect=true"><i class="icon icon-home"></i> <span>Dashboard</span> </h:commandLink>
+			<ul> <!-- style="display: block; " -->
+				<ui:fragment rendered="#{loginBean.hasAccessToDominio('DEMANDA')}">
+					<li>
+						<h:commandLink value="" action="/dashboard/demandas?faces-redirect=true"><i class="icon icon-home"></i> <span>Dashboard</span> </h:commandLink>
+					</li>
+				</ui:fragment>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-road"></i> <span>Demanda</span> </a> <!-- <span class="label">3</span> -->
+					<ul>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('TIPO_SERVICO')}">
+							<li><h:commandLink value="Tipo de serviço" action="/admin/tiposervico/tiposervico?faces-redirect=true"/></li>
+						</ui:fragment>
+						
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('CRITICIDADE')}">
+							<li><h:commandLink value="Criticidade" action="/admin/criticidade/criticidade?faces-redirect=true"/></li>
+						</ui:fragment>
+						
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('AREA_SOLICITANTE')}">
+							<li><h:commandLink value="Área solicitante" action="/admin/areasolicitante/areasolicitante?faces-redirect=true"/></li>
+						</ui:fragment>
+					</ul>
+				</li>
+				<ui:fragment rendered="#{loginBean.hasAccessToDominio('CLIENTE')}">
+					<li>
+						<h:commandLink value="" action="/admin/cliente/cliente?faces-redirect=true"><i class="icon icon-random"></i> <span>Cliente</span> </h:commandLink>
+					</li>
+				</ui:fragment>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-road"></i> <span>Status</span> </a> <!-- <span class="label">2</span> -->
+					<ul>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('STATUS')}">
+							<li><h:commandLink value="Status" action="/admin/status/status?faces-redirect=true"/></li>
+						</ui:fragment>
+						
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('TRANSICAO_STATUS')}">
+							<li><h:commandLink value="Transição de status" action="/admin/transicaostatus/transicaostatus?faces-redirect=true"/></li>
+						</ui:fragment>
+					</ul>
 				</li>
 				<li class="submenu">
-					<a href="#"><i class="icon icon-road"></i> <span>Demanda</span> <span class="label">3</span></a>
+					<a href="#"><i class="icon icon-road"></i> <span>Perfil</span> </a> <!-- <span class="label">3</span> -->
 					<ul>
-						<li><h:commandLink value="Tipo de serviço" action="/admin/tiposervico/tiposervico?faces-redirect=true"/></li>
-						<li><h:commandLink value="Criticidade" action="/admin/criticidade/criticidade?faces-redirect=true"/></li>
-						<li><h:commandLink value="Área solicitante" action="/admin/areasolicitante/areasolicitante?faces-redirect=true"/></li>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('PERFIL')}">
+							<li><h:commandLink value="Perfil" action="/admin/perfil/perfil?faces-redirect=true"/></li>
+						</ui:fragment>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('TRANSICAO_STATUS_PERFIL')}">
+							<li><h:commandLink value="Associação perfil / transição de status" action="/admin/transicaostatusperfil/transicaostatusperfil?faces-redirect=true"/></li>
+						</ui:fragment>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('PERFIL_ACAO_DOMINIO')}">
+							<li><h:commandLink value="Associação perfil / ação / domínio" action="/admin/perfilacaodominio/perfilacaodominio?faces-redirect=true"/></li>
+						</ui:fragment>
 					</ul>
 				</li>
 				<li>
-					<h:commandLink value="" action="/admin/cliente/cliente?faces-redirect=true"><i class="icon icon-random"></i> <span>Cliente</span> </h:commandLink>
+					<ui:fragment rendered="#{loginBean.hasAccessToDominio('USUARIO')}">
+						<h:commandLink value="" action="/admin/usuario/usuario?faces-redirect=true"><i class="icon icon-home"></i> <span>Usuário</span></h:commandLink>
+					</ui:fragment>
 				</li>
-				<li class="submenu">
-					<a href="#"><i class="icon icon-road"></i> <span>Status</span> <span class="label">2</span></a>
-					<ul>
-						<li><h:commandLink value="Status" action="/admin/status/status?faces-redirect=true"/></li>
-						<li><h:commandLink value="Transição de status" action="/admin/transicaostatus/transicaostatus?faces-redirect=true"/></li>
-					</ul>
-				</li>
-				<li class="submenu">
-					<a href="#"><i class="icon icon-road"></i> <span>Perfil</span> <span class="label">3</span></a>
-					<ul>
-						<li><h:commandLink value="Perfil" action="/admin/perfil/perfil?faces-redirect=true"/></li>
-						<li><h:commandLink value="Associação perfil / transição de status" action="/admin/transicaostatusperfil/transicaostatusperfil?faces-redirect=true"/></li>
-						<li><h:commandLink value="Associação perfil / ação / domínio" action="/admin/perfilacaodominio/perfilacaodominio?faces-redirect=true"/></li>
-					</ul>
-				</li>
-				<li>
-					<h:commandLink value="" action="/admin/usuario/usuario?faces-redirect=true"><i class="icon icon-home"></i> <span>Usuário</span></h:commandLink>
-				</li>
-				
-				
 			</ul>
 		</div>
 	</h:form>
