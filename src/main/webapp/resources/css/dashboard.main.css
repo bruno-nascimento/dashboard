@@ -1437,3 +1437,12 @@ form {
 	height: auto;
 	width: auto;
 }
+
+div.controls div div.checker {
+     display: none;
+}
+
+.ui-helper-hidden{
+     display: none;
+	
+}

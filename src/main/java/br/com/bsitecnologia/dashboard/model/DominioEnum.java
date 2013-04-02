@@ -19,8 +19,7 @@ public enum DominioEnum {
 	TELEFONE(10, "Telefone", ""),
 	TRANSICAO_STATUS_PERFIL(11, "Associação de perfil e transição de status", "/admin/transicaostatusperfil/transicaostatusperfil.jsf?faces-redirect=true"),
 	PERFIL_ACAO_DOMINIO(12, "Associação de perfil, ação e domínio", "/admin/perfilacaodominio/perfilacaodominio.jsf?faces-redirect=true"),
-	DOMINIO(13, "Domínio", ""),
-	ACAO(14, "Ação", "");
+	CAMPO(13, "Campo", "/admin/campo/campo.jsf?faces-redirect=true");
 
 	private DominioEnum(int id, String descricao, String url){
 		this.id = id;

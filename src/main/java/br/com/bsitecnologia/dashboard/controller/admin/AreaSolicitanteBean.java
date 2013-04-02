@@ -9,7 +9,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
 
 import org.apache.myfaces.extensions.cdi.core.api.scope.conversation.ConversationScoped;
 
@@ -21,7 +20,6 @@ import br.com.bsitecnologia.dashboard.dao.ClienteDao;
 import br.com.bsitecnologia.dashboard.model.AreaSolicitante;
 import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.DominioEnum;
-import br.com.bsitecnologia.dashboard.resources.db.DashboardDB;
 
 @Named
 @ConversationScoped
@@ -33,10 +31,6 @@ public class AreaSolicitanteBean extends BaseCrudBean<AreaSolicitante> implement
 	@Inject private AreaSolicitanteDao areaSolicitanteDao;
 	@Inject @New private AreaSolicitante areaSolicitanteForm;
 	@Inject private DashboardDataModel<AreaSolicitante> dataModel;
-	
-	@Inject
-	@DashboardDB
-	EntityManager entityManager;
 	
 	@Inject private ClienteDao clienteDao;
 

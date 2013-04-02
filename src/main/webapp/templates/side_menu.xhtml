@@ -65,6 +65,14 @@
 						<h:commandLink value="" action="/admin/usuario/usuario?faces-redirect=true"><i class="icon icon-home"></i> <span>Usuário</span></h:commandLink>
 					</ui:fragment>
 				</li>
+				<li class="submenu">
+					<a href="#"><i class="icon icon-road"></i> <span>Formulário</span> </a> <!-- <span class="label">2</span> -->
+					<ul>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('CAMPO')}">
+							<li><h:commandLink value="Campo" action="/admin/campo/campo?faces-redirect=true"/></li>
+						</ui:fragment>
+					</ul>
+				</li>
 			</ul>
 		</div>
 	</h:form>

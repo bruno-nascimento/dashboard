@@ -1,0 +1,135 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{campoBean}" />
+
+	<ui:define name="content">
+	
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+				
+						<h:form id="title_header">
+							<ui:fragment id="widget_title_wrapper">
+								<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+									<span class="icon"> <i class="icon icon-pencil"></i>
+									</span>
+									<h5>#{campoBean.campoForm.id eq null ? "Inserir" :"Editar"} campos</h5>
+								</div>
+							</ui:fragment>
+						</h:form>
+
+						<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Nome do campo :</label>
+							<div class="controls">
+								<p:inputText id="label" value="#{campoBean.campoForm.label}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Quantidade caracteres:</label>
+							<div class="controls">
+								<p:inputText id="tamanho" value="#{campoBean.campoForm.tamanho}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Obrigatório :</label>
+							<div class="controls">
+								<p:selectBooleanButton value="#{campoBean.campoForm.obrigatorio}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close" />  
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Tipo do campo :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="tipoInput" valueChangeListener="#{campoBean.tipoInputValueChangeListener}" effect="fade" value="#{campoBean.tipoInputIdSelectedItem}" >
+		                        	<p:ajax event="change" update="tipoDado" onstart="$('#formz_tipoDado_chzn').remove();" oncomplete="$('select').chosen();"/>
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{campoBean.tipoInputList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Tipo de dado :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="tipoDado" valueChangeListener="#{campoBean.tipoDadoValueChangeListener}" effect="fade" value="#{campoBean.tipoDadoIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{campoBean.tipoDadoList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+	
+						<div class="form-actions">
+							
+							<p:commandButton value="Salvar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.salvar}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.editar}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id ne null}"/>
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.delete}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id ne null}"/>
+							
+							<p:commandButton value="Cancelar" update=":formz,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.cancel}" oncomplete="$('select').chosen();hide_checkbox();"/>
+					
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de campos</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="campo"
+								value="#{campoBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{campoBean.campoForm}" selectionMode="single" emptyMessage="Nenhum campo cadastrado">
+								<p:ajax event="rowSelect" listener="#{campoBean.onRowSelect}" update=":formz,:title_header" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz'); hide_checkbox();"/>
+								<p:column headerText="Label">
+									<h:outputText value="#{campo.label}" />
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+		
+		<script>
+			function hide_checkbox(){
+				$( "input.ui-helper-hidden" ).hide()
+			}
+		</script>
+
+	</ui:define>
+
+</ui:composition>
