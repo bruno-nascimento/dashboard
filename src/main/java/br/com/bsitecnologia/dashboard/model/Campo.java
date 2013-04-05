@@ -145,4 +145,69 @@ public class Campo implements Serializable, BaseEntity{
 		return label;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((campoFormularios == null) ? 0 : campoFormularios.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((label == null) ? 0 : label.hashCode());
+		result = prime * result + (obrigatorio ? 1231 : 1237);
+		result = prime * result + ((opcoes == null) ? 0 : opcoes.hashCode());
+		result = prime * result + tamanho;
+		result = prime * result
+				+ ((tipoDado == null) ? 0 : tipoDado.hashCode());
+		result = prime * result
+				+ ((tipoInput == null) ? 0 : tipoInput.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!getClass().isAssignableFrom(obj.getClass()))
+			return false;
+		Campo other = (Campo) obj;
+		if (getCampoFormularios() == null) {
+			if (other.getCampoFormularios() != null)
+				return false;
+		} else if (!getCampoFormularios().equals(other.getCampoFormularios()))
+			return false;
+		if (getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!getId().equals(other.getId()))
+			return false;
+		if (getLabel() == null) {
+			if (other.getLabel() != null)
+				return false;
+		} else if (!getLabel().equals(other.getLabel()))
+			return false;
+		if (getObrigatorio() != other.getObrigatorio())
+			return false;
+		if (getOpcoes() == null) {
+			if (other.getOpcoes() != null)
+				return false;
+		} else if (!getOpcoes().equals(other.getOpcoes()))
+			return false;
+		if (getTamanho() != other.getTamanho())
+			return false;
+		if (getTipoDado() == null) {
+			if (other.getTipoDado() != null)
+				return false;
+		} else if (!getTipoDado().equals(other.getTipoDado()))
+			return false;
+		if (getTipoInput() == null) {
+			if (other.getTipoInput() != null)
+				return false;
+		} else if (!getTipoInput().equals(other.getTipoInput()))
+			return false;
+		return true;
+	}
+
 }

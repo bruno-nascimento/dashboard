@@ -70,16 +70,50 @@
 							</div>
 						</div>
 						
+						<div class="control-group">
+								<label class="control-label">Opções :</label>
+								<div class="controls">
+									
+									<p:commandButton id="effectsDialogButton" value="Adicionar opção" onclick="dlg3.show();" type="button" />
+									
+										<p:dataTable id="booksTable" value="#{campoBean.listaOpcoes}" var="opcao" style="max-width:80%;  padding-top:1em;">
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Nome" />
+												</f:facet>
+												<h:outputText value="#{opcao.nome}" />
+											</p:column>
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Valor" />
+												</f:facet>
+												<h:outputText value="#{opcao.valor}" />
+											</p:column>
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Remover" />
+												</f:facet>
+												<p:commandLink value="Remove" update="booksTable" partialSubmit="true" process="@this">
+													<p:collector value="#{opcao}" removeFrom="#{campoBean.listaOpcoes}" />
+												</p:commandLink>
+											</p:column>
+	
+										</p:dataTable>
+									
+								</div>
+						</div>
+						
 	
 						<div class="form-actions">
-							
 							<p:commandButton value="Salvar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.salvar}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id eq null}"/>
 							<p:commandButton value="Editar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.editar}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id ne null}"/>
 							
 							<p:commandButton value="Deletar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.delete}" onclick="msgs.show();" rendered="#{campoBean.campoForm.id ne null}"/>
 							
 							<p:commandButton value="Cancelar" update=":formz,:title_header" styleClass="btn btn-inverse" actionListener="#{campoBean.cancel}" oncomplete="$('select').chosen();hide_checkbox();"/>
-					
 						</div>
 						
 					</h:form>
@@ -123,6 +157,27 @@
 			</div>
 
 		</div>
+		
+		<h:form id="opcoesForm">
+			<p:dialog widgetVar="dlg3" showEffect="puff" hideEffect="puff" >
+				<f:facet name="header">
+					<h5>Adicionar campo</h5>
+				</f:facet>  
+				<h:panelGrid columns="2" cellpadding="5">  
+		            <h:outputLabel for="nomeOpcao" value="Nome:" />  
+					<p:inputText id="nomeOpcao" value="#{campoBean.opcao.nome}"/>
+		              
+		            <h:outputLabel for="valorOpcao" value="Valor:" />  
+					<p:inputText id="valorOpcao" value="#{campoBean.opcao.valor}"/>
+		              
+		            <f:facet name="footer">  
+				        <p:commandButton id="btn_add_opcao" value="ok" update=":formz:booksTable" action="#{campoBean.resetOpcao}" process="@form" oncomplete="dlg3.hide();" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-inverse">  
+				        	<p:collector value="#{campoBean.opcao}" addTo="#{campoBean.listaOpcoes}" />  
+				        </p:commandButton>
+		            </f:facet>  
+		        </h:panelGrid>  
+			</p:dialog>
+		</h:form>
 		
 		<script>
 			function hide_checkbox(){

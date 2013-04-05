@@ -1,0 +1,136 @@
+<ui:composition 
+	template="/templates/main.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:param name="bean" value="#{formularioBean}" />
+
+	<ui:define name="content">
+	
+		<div class="row-fluid">
+
+			<div class="span12">
+			
+				<div class="widget-box">
+				
+						<h:form id="title_header">
+							<ui:fragment id="widget_title_wrapper">
+								<div id="widget_title" class="widget-title"	onclick="$('#formz').collapse('toggle')">
+									<span class="icon"> <i class="icon icon-pencil"></i>
+									</span>
+									<h5>#{formularioBean.formularioForm.id eq null ? "Inserir" :"Editar"} formulário</h5>
+								</div>
+							</ui:fragment>
+						</h:form>
+
+						<h:form id="formz" styleClass="form-horizontal">
+					
+						<div class="control-group">
+							<label class="control-label">Nome :</label>
+							<div class="controls">
+								<p:inputText id="nome" value="#{formularioBean.formularioForm.nome}" />
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Campos :</label>
+							<div class="controls">
+							        <h:selectOneMenu id="campo" valueChangeListener="#{formularioBean.campoValueChangeListener}" effect="fade" value="#{formularioBean.campoIdSelectedItem}" >
+			                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+							            <f:selectItems value="#{formularioBean.campoList}" />  
+									</h:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div class="controls">
+								<p:commandButton id="btn_add_campo" value="Adicionar campo" update=":formz" styleClass="btn">  
+							    	<p:collector value="#{formularioBean.campo}" addTo="#{formularioBean.listaCampo}" />
+							        <p:ajax listener="#{formularioBean.resetCampo}"/>  
+						        </p:commandButton>							
+							</div>
+						</div>
+						
+						<div class="control-group">
+								<div class="controls">
+									
+										<p:dataTable id="camposTable" value="#{formularioBean.listaCampo}" var="campo" style="max-width:80%;  padding-top:1em;">
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Nome" />
+												</f:facet>
+												<h:outputText value="#{campo.label}" />
+											</p:column>
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Remover" />
+												</f:facet>
+												<p:commandLink value="Remove" update="camposTable" ajax="false">
+													<p:collector value="#{campo}" removeFrom="#{formularioBean.listaCampo}" />
+												</p:commandLink>
+											</p:column>
+	
+										</p:dataTable>
+									
+								</div>
+						</div>
+						
+	
+						<div class="form-actions">
+							<p:commandButton value="Salvar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{formularioBean.salvar}" onclick="msgs.show();" rendered="#{formularioBean.formularioForm.id eq null}"/>
+							<p:commandButton value="Editar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{formularioBean.editar}" onclick="msgs.show();" rendered="#{formularioBean.formularioForm.id ne null}"/>
+							
+							<p:commandButton value="Deletar" update=":formz,:table_form,:title_header" styleClass="btn btn-inverse" actionListener="#{formularioBean.delete}" onclick="msgs.show();" rendered="#{formularioBean.formularioForm.id ne null}"/>
+							
+							<p:commandButton value="Cancelar" update=":formz,:title_header" styleClass="btn btn-inverse" actionListener="#{formularioBean.cancel}" oncomplete="$('select').chosen();hide_checkbox();"/>
+						</div>
+						
+					</h:form>
+					
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="row-fluid">
+			
+			<div class="span12">
+				
+				<h:form id="table_form">
+
+					<div class="widget-box">
+						
+						<div class="widget-title">
+							<span class="icon"> <i class="icon-th"></i></span>
+							<h5>Lista de formulários</h5>
+						</div>
+						
+						<div class="widget-content">
+							
+							<p:dataTable id="table" var="formulario"
+								value="#{formularioBean.dataModel}"
+								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
+								rows="10" selection="#{formularioBean.formularioForm}" selectionMode="single" emptyMessage="Nenhum formulário cadastrado">
+								<p:ajax event="rowSelect" listener="#{formularioBean.onRowSelect}" update=":formz,:title_header" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz'); hide_checkbox();"/>
+								<p:column headerText="Nome">
+									<h:outputText value="#{formulario.nome}" />
+								</p:column>
+							</p:dataTable>
+
+						</div>
+					</div>
+
+				</h:form>
+
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

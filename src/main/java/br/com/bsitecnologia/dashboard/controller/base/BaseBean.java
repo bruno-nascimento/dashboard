@@ -36,6 +36,7 @@ public abstract class BaseBean<T extends BaseEntity> implements Serializable{
 	
 	public void init(DominioEnum dominioEnum) {
 		dominio = dominioEnum;
+		setTitle(dominioEnum.getDescricao());
 	}
 	
 	public void addMessage(Severity severity, String summary, String detail) {

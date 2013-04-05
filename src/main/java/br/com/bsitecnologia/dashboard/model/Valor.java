@@ -26,6 +26,10 @@ public class Valor implements Serializable, BaseEntity {
 	@Column(name = "id", unique = true, nullable = false)
 	private Integer id;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="demanda", nullable=false)
+	private Demanda demanda;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "campoFormulario", nullable = false)
 	private CampoFormulario campoFormulario;
@@ -80,6 +84,14 @@ public class Valor implements Serializable, BaseEntity {
 
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+	
+	public Demanda getDemanda() {
+		return demanda;
+	}
+
+	public void setDemanda(Demanda demanda) {
+		this.demanda = demanda;
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import br.com.bsitecnologia.dashboard.util.BaseEntity;
+
 /**
  * Generic Repository, providing basic CRUD operations
  *
@@ -15,7 +17,7 @@ import java.util.Map;
  * @param <T> the entity type
  * @param <ID> the primary key type
  */
-public interface GenericRepository<T, ID extends Serializable> {
+public interface GenericRepository<T extends BaseEntity, ID extends Serializable> {
     //~ Methods ----------------------------------------------------------------
 
     /**

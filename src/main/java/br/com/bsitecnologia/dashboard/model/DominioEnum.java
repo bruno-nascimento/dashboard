@@ -19,7 +19,8 @@ public enum DominioEnum {
 	TELEFONE(10, "Telefone", ""),
 	TRANSICAO_STATUS_PERFIL(11, "Associação de perfil e transição de status", "/admin/transicaostatusperfil/transicaostatusperfil.jsf?faces-redirect=true"),
 	PERFIL_ACAO_DOMINIO(12, "Associação de perfil, ação e domínio", "/admin/perfilacaodominio/perfilacaodominio.jsf?faces-redirect=true"),
-	CAMPO(13, "Campo", "/admin/campo/campo.jsf?faces-redirect=true");
+	CAMPO(13, "Campo", "/admin/campo/campo.jsf?faces-redirect=true"),
+	FORMULARIO(14, "Formulário", "/admin/formulario/formulario.jsf?faces-redirect=true");
 
 	private DominioEnum(int id, String descricao, String url){
 		this.id = id;
@@ -73,5 +74,5 @@ public enum DominioEnum {
 //INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (10, 'Telefone');
 //INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (11, 'Associação de Perfil e Transição de Status');
 //INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (12, 'Associação de Perfil, Ação e Dominio');
-//INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (13, 'Dominio');
-//INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (14, 'Ação');
+//INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (13, 'Campo');
+//INSERT INTO `dashboard`.`Dominio` (`id`, `nome`) VALUES (14, 'Formulário');

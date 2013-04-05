@@ -4,7 +4,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -90,6 +93,9 @@ public class Demanda implements Serializable, BaseEntity {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "conclusao", length = 10)
 	private Date conclusao;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="demanda")
+	private List<Valor> valoresCamposFormulariosDinamicos = new ArrayList<Valor>(0);
 
 	
 	public Demanda() {
@@ -279,6 +285,15 @@ public class Demanda implements Serializable, BaseEntity {
 
 	public void setConclusao(Date conclusao) {
 		this.conclusao = conclusao;
+	}
+	
+	public List<Valor> getValoresCamposFormulariosDinamicos() {
+		return valoresCamposFormulariosDinamicos;
+	}
+
+	public void setValoresCamposFormulariosDinamicos(
+			List<Valor> valoresCamposFormulariosDinamicos) {
+		this.valoresCamposFormulariosDinamicos = valoresCamposFormulariosDinamicos;
 	}
 
 	@Override

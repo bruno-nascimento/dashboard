@@ -20,9 +20,11 @@ import br.com.bsitecnologia.dashboard.dao.CampoDao;
 import br.com.bsitecnologia.dashboard.dao.TipoInputDao;
 import br.com.bsitecnologia.dashboard.model.Campo;
 import br.com.bsitecnologia.dashboard.model.DominioEnum;
+import br.com.bsitecnologia.dashboard.model.Opcoes;
 import br.com.bsitecnologia.dashboard.model.TipoDado;
 import br.com.bsitecnologia.dashboard.model.TipoInput;
 import br.com.bsitecnologia.dashboard.model.TipoInputTipoDado;
+import br.com.bsitecnologia.dashboard.service.CampoService;
 
 @Named
 @ConversationScoped
@@ -44,11 +46,14 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 	private String tipoDadoIdSelectedItem;
 	private List<TipoDado> allTipoDadoFromTipoInput;
 	
+	@Inject @New private Opcoes opcao;
+	private List<Opcoes> listaOpcoes = new ArrayList<Opcoes>();
+	
+	@Inject CampoService campoService;
+	
 	@PostConstruct
 	public void postConstruct(){
 		super.init(DominioEnum.CAMPO);
-		setTitle("Campo");
-		
 	}
 	
 	public void tipoInputValueChangeListener(ValueChangeEvent event){
@@ -66,6 +71,17 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 	protected void postLoad() {
 		allTipoInputFromDB = tipoInputDao.findAll();
 		tipoInputList = fillSelectItemList(allTipoInputFromDB);
+	}
+	
+	@Override
+	protected void postUpdate(){
+		campoService.saveOpcoes(listaOpcoes, campoForm);
+	}
+	
+	@Override
+	protected void preDelete(){
+		campoService.deleteOpcoes(campoForm);
+		campoForm.setOpcoes(null);
 	}
 
 	@Override
@@ -93,6 +109,12 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 		campoForm = new Campo();
 		tipoInputIdSelectedItem = null;
 		tipoDadoIdSelectedItem = null;
+		opcao = new Opcoes();
+		listaOpcoes = new ArrayList<Opcoes>();
+	}
+	
+	public void resetOpcao(){
+		opcao = new Opcoes();
 	}
 	
 	@Override
@@ -100,6 +122,7 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 		tipoInputIdSelectedItem = campoForm.getTipoInput() != null ? campoForm.getTipoInput().getId().toString() : null;
 		setTipoDadoComboOptions();
 		tipoDadoIdSelectedItem = campoForm.getTipoDado() != null ? campoForm.getTipoDado().getId().toString() : null;
+		listaOpcoes = campoForm.getOpcoes();
 	}
 	
 	private void setTipoDadoComboOptions(){
@@ -156,6 +179,22 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 
 	public void setTipoDadoIdSelectedItem(String tipoDadoIdSelectedItem) {
 		this.tipoDadoIdSelectedItem = tipoDadoIdSelectedItem;
+	}
+	
+	public Opcoes getOpcao() {
+		return opcao;
+	}
+
+	public void setOpcao(Opcoes opcao) {
+		this.opcao = opcao;
+	}
+
+	public List<Opcoes> getListaOpcoes() {
+		return listaOpcoes;
+	}
+
+	public void setListaOpcoes(List<Opcoes> listaOpcoes) {
+		this.listaOpcoes = listaOpcoes;
 	}
 	
 }
