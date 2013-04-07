@@ -47,7 +47,7 @@ public class Usuario implements Serializable, BaseEntity {
 	@Column(name = "nome", nullable = false)
 	private String nome;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "usuario")
 	private List<Telefone> telefones = new ArrayList<Telefone>(0);
 	
 	@Transient

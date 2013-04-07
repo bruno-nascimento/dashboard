@@ -1,0 +1,58 @@
+<ui:composition lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<ui:param name="valores" value="#{valores}" />
+
+	<ui:repeat var="valor" value="#{valores}">
+		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 1}">
+			<ui:include src="/templates/formulario/text.xhtml" />
+			text
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 2}">
+			<ui:include src="/templates/formulario/checkbox.xhtml" />
+			check
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 3}">
+			<ui:include src="/templates/formulario/radio.xhtml" />
+			radio
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 4}">
+			<ui:include src="/templates/formulario/select.xhtml" />
+			select
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 5}">
+			<ui:include src="/templates/formulario/textarea.xhtml" />
+			textarea
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 6}">
+			<ui:include src="/templates/formulario/password.xhtml" />
+			pass
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 7}">
+			<ui:include src="/templates/formulario/calendar.xhtml" />
+			calendar
+		</ui:fragment>		
+		<ui:fragment rendered="#{valor.campoFormulario.campo.tipoInput.id eq 8}">
+			<ui:include src="/templates/formulario/upload.xhtml" />
+			upload
+		</ui:fragment>		
+		
+	</ui:repeat>
+
+</ui:composition>
+
+<!-- 
+id;nome;opcoes
+1;text;0
+2;checkbox;1
+3;radio;1
+4;select;1
+5;textarea;0
+6;password;0
+7;calendar;0
+8;upload;0
+ -->

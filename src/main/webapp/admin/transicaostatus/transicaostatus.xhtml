@@ -32,6 +32,26 @@
 						</div>
 						
 						<div class="control-group">
+							<label class="control-label">Cliente :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusBean.clienteIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusBean.clienteList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<label class="control-label">Formulario :</label>
+							<div class="controls">
+						        <h:selectOneMenu id="formulario" valueChangeListener="#{transicaoStatusBean.formularioValueChangeListener}" effect="fade" value="#{transicaoStatusBean.formularioIdSelectedItem}" >
+		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
+						            <f:selectItems value="#{transicaoStatusBean.formularioList}" />  
+								</h:selectOneMenu>
+							</div>
+						</div>
+						
+						<div class="control-group">
 							<label class="control-label">De :</label>
 							<div class="controls">
 						        <h:selectOneMenu id="statusDe" valueChangeListener="#{transicaoStatusBean.statusDeValueChangeListener}" effect="fade" value="#{transicaoStatusBean.statusDeIdSelectedItem}" >
@@ -48,16 +68,6 @@
 						        <h:selectOneMenu id="statusPara" valueChangeListener="#{transicaoStatusBean.statusParaValueChangeListener}" effect="fade" value="#{transicaoStatusBean.statusParaIdSelectedItem}" >
 		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
 						            <f:selectItems value="#{transicaoStatusBean.statusParaList}" />  
-								</h:selectOneMenu>
-							</div>
-						</div>
-						
-						<div class="control-group">
-							<label class="control-label">Cliente :</label>
-							<div class="controls">
-						        <h:selectOneMenu id="cliente" valueChangeListener="#{transicaoStatusBean.clienteValueChangeListener}" effect="fade" value="#{transicaoStatusBean.clienteIdSelectedItem}" >
-		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
-						            <f:selectItems value="#{transicaoStatusBean.clienteList}" />  
 								</h:selectOneMenu>
 							</div>
 						</div>

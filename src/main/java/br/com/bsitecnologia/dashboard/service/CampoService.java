@@ -27,4 +27,8 @@ public class CampoService implements Serializable{
 		opcoesDao.deleteByCampo(campo);
 	}
 
+	public List<Opcoes> getOpcoesByCampo(Campo campo) {
+		return opcoesDao.getOpcoesByCampo(campo);
+	}
+
 }

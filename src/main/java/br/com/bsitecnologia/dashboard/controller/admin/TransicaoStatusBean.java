@@ -17,10 +17,12 @@ import br.com.bsitecnologia.dashboard.controller.base.BaseCrudBean;
 import br.com.bsitecnologia.dashboard.controller.datamodel.DashboardDataModel;
 import br.com.bsitecnologia.dashboard.controller.template.BreadcrumbEnum;
 import br.com.bsitecnologia.dashboard.dao.ClienteDao;
+import br.com.bsitecnologia.dashboard.dao.FormularioDao;
 import br.com.bsitecnologia.dashboard.dao.StatusDao;
 import br.com.bsitecnologia.dashboard.dao.TransicaoStatusDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.DominioEnum;
+import br.com.bsitecnologia.dashboard.model.Formulario;
 import br.com.bsitecnologia.dashboard.model.Status;
 import br.com.bsitecnologia.dashboard.model.TransicaoStatus;
 
@@ -49,6 +51,12 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implement
 	private String statusDeIdSelectedItem;
 	private String statusParaIdSelectedItem;
 	
+	@Inject private FormularioDao formularioDao;
+
+	private List<Formulario> allFormulariosFromDB;
+	private List<SelectItem> formularioList;
+	private String formularioIdSelectedItem;
+	
 	@PostConstruct
 	public void postConstruct(){
 		super.init(DominioEnum.TRANSICAO_STATUS);
@@ -56,6 +64,10 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implement
 	
 	public void clienteValueChangeListener(ValueChangeEvent event){
 		transicaoStatusForm.setCliente(getEntityFromValueChangeEvent(event, allClientesFromDB));
+	}
+	
+	public void formularioValueChangeListener(ValueChangeEvent event){
+		transicaoStatusForm.setFormulario(getEntityFromValueChangeEvent(event, allFormulariosFromDB));
 	}
 	
 	public void statusDeValueChangeListener(ValueChangeEvent event){
@@ -109,25 +121,46 @@ public class TransicaoStatusBean extends BaseCrudBean<TransicaoStatus> implement
 		clienteIdSelectedItem = null;
 		statusDeIdSelectedItem = null;
 		statusParaIdSelectedItem = null;
+		formularioIdSelectedItem = null;
 	}
 	
 	@Override
 	protected void postLoad() {
 		allClientesFromDB = clienteDao.findAll();
 		allStatusFromDB = statusDao.findAll();
+		allFormulariosFromDB = formularioDao.findAll();
 		clienteList = fillSelectItemList(allClientesFromDB);
 		statusDeList = fillSelectItemList(allStatusFromDB);
+		formularioList = fillSelectItemList(allFormulariosFromDB);
 	}
 	
 	@Override
 	protected void postRowSelect() {
 		clienteIdSelectedItem = transicaoStatusForm.getCliente() != null ? transicaoStatusForm.getCliente().getId().toString() : null;
 		statusDeIdSelectedItem = transicaoStatusForm.getStatusDe() != null ? transicaoStatusForm.getStatusDe().getId().toString() : null;
+		statusParaList = fillStatusSelectItemList(transicaoStatusForm.getStatusDe());
 		statusParaIdSelectedItem = transicaoStatusForm.getStatusPara() != null ? transicaoStatusForm.getStatusPara().getId().toString() : null;
+		formularioIdSelectedItem = transicaoStatusForm.getFormulario() != null ? transicaoStatusForm.getFormulario().getId().toString() : null;
 	}
 	
 	/* get&set */
 	
+	public List<SelectItem> getFormularioList() {
+		return formularioList;
+	}
+
+	public void setFormularioList(List<SelectItem> formularioList) {
+		this.formularioList = formularioList;
+	}
+
+	public String getFormularioIdSelectedItem() {
+		return formularioIdSelectedItem;
+	}
+
+	public void setFormularioIdSelectedItem(String formularioIdSelectedItem) {
+		this.formularioIdSelectedItem = formularioIdSelectedItem;
+	}
+
 	public TransicaoStatus getTransicaoStatusForm() {
 		return transicaoStatusForm;
 	}

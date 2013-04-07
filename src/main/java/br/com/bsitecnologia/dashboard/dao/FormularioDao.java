@@ -17,9 +17,10 @@ public class FormularioDao extends GenericJpaRepository<Formulario, Integer>{
 	@Override
 	public List<Formulario> findAll() {
 		try{
-			Query q = entityManager.createQuery("select form from Formulario form " +
+			Query q = entityManager.createQuery("select distinct form from Formulario form " +
 					"left join fetch form.campoFormularios campoFormulario " +
-					"left join fetch campoFormulario.campo campo");
+					"left join fetch campoFormulario.campo campo " +
+					"left join fetch campo.tipoInput tipoInput");
 			return (List<Formulario>)q.getResultList();
 		} catch (Exception e) {
 			catchEvent.fire(new ExceptionToCatch(e));
@@ -29,7 +30,7 @@ public class FormularioDao extends GenericJpaRepository<Formulario, Integer>{
 	
 	public Formulario getFormularioById(Integer id){
 		try{
-			Query q = entityManager.createQuery("select form from Formulario form " +
+			Query q = entityManager.createQuery("select distinct form from Formulario form " +
 					"left join fetch form.campoFormularios campoFormulario " +
 					"left join fetch campoFormulario.campo campo "+
 					"where form.id = :formId");

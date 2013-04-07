@@ -109,6 +109,7 @@ public class FormularioBean extends BaseCrudBean<Formulario> implements Serializ
 	@Override
 	protected void postRowSelect() {
 		campoIdSelectedItem = null;
+		campo = new Campo();
 		listaCampo = getAllCamposFromFormulario();
 	}
 	

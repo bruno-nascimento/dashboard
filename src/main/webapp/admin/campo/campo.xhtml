@@ -53,7 +53,7 @@
 							<label class="control-label">Tipo do campo :</label>
 							<div class="controls">
 						        <h:selectOneMenu id="tipoInput" valueChangeListener="#{campoBean.tipoInputValueChangeListener}" effect="fade" value="#{campoBean.tipoInputIdSelectedItem}" >
-		                        	<p:ajax event="change" update="tipoDado" onstart="$('#formz_tipoDado_chzn').remove();" oncomplete="$('select').chosen();"/>
+		                        	<p:ajax event="change" update="formz" onstart="$('#formz_tipoDado_chzn').remove();" oncomplete="$('select').chosen();hide_checkbox();"/>
 		                        	<f:selectItem itemLabel="Selecione ..." itemValue="" />  
 						            <f:selectItems value="#{campoBean.tipoInputList}" />  
 								</h:selectOneMenu>
@@ -70,7 +70,10 @@
 							</div>
 						</div>
 						
-						<div class="control-group">
+						<h:panelGroup layout="block" id="campos" styleClass="control-group" rendered="#{campoBean.tipoInputIdSelectedItem eq '2' or
+						                                                                                campoBean.tipoInputIdSelectedItem eq '3' or
+						                                                                                campoBean.tipoInputIdSelectedItem eq '4'}"> <!-- refatorar isso depois -->
+						
 								<label class="control-label">Opções :</label>
 								<div class="controls">
 									
@@ -104,7 +107,7 @@
 										</p:dataTable>
 									
 								</div>
-						</div>
+						</h:panelGroup>
 						
 	
 						<div class="form-actions">

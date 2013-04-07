@@ -1,6 +1,7 @@
 package br.com.bsitecnologia.dashboard.controller.admin;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -21,7 +22,9 @@ import br.com.bsitecnologia.dashboard.dao.UsuarioDao;
 import br.com.bsitecnologia.dashboard.model.Cliente;
 import br.com.bsitecnologia.dashboard.model.DominioEnum;
 import br.com.bsitecnologia.dashboard.model.Perfil;
+import br.com.bsitecnologia.dashboard.model.Telefone;
 import br.com.bsitecnologia.dashboard.model.Usuario;
+import br.com.bsitecnologia.dashboard.service.UsuarioService;
 
 @Named
 @ConversationScoped
@@ -46,6 +49,11 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	private List<SelectItem> perfilList;
 	private String perfilIdSelectedItem;
 	
+	@Inject @New private Telefone telefone;
+	private List<Telefone> listaTelefones = new ArrayList<Telefone>();
+	
+	@Inject UsuarioService usuarioService;
+	
 	@PostConstruct
 	public void postConstruct(){
 		super.init(DominioEnum.USUARIO);
@@ -61,6 +69,17 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	
 	
 	/*BASE BEAN ABSTRACT METHODS IMPLEMENTATION*/
+	
+	@Override
+	protected void postUpdate(){
+		usuarioService.saveTelefones(listaTelefones, usuarioForm);
+	}
+	
+	@Override
+	protected void preDelete(){
+		usuarioService.deleteTelefones(usuarioForm);
+		usuarioForm.setTelefones(null);
+	}
 
 	@Override
 	protected UsuarioDao getDao() {
@@ -87,6 +106,12 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 		usuarioForm = new Usuario();
 		clienteIdSelectedItem = null;
 		perfilIdSelectedItem = null;
+		telefone = new Telefone();
+		listaTelefones = new ArrayList<Telefone>();
+	}
+	
+	public void resetTelefone(){
+		telefone = new Telefone();
 	}
 	
 	@Override
@@ -102,10 +127,27 @@ public class UsuarioBean extends BaseCrudBean<Usuario> implements Serializable {
 	protected void postRowSelect() {
 		clienteIdSelectedItem = usuarioForm.getCliente() != null ? usuarioForm.getCliente().getId().toString() : null;
 		perfilIdSelectedItem = usuarioForm.getPerfil() != null ? usuarioForm.getPerfil().getId().toString() : null;
+		listaTelefones = usuarioForm.getTelefones();
 	}
 	
 	/* get&set */
 	
+	public Telefone getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(Telefone telefone) {
+		this.telefone = telefone;
+	}
+
+	public List<Telefone> getListaTelefones() {
+		return listaTelefones;
+	}
+
+	public void setListaTelefones(List<Telefone> listaTelefones) {
+		this.listaTelefones = listaTelefones;
+	}
+
 	public Usuario getUsuarioForm() {
 		return usuarioForm;
 	}

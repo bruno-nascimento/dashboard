@@ -1,5 +1,8 @@
 package br.com.bsitecnologia.dashboard.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.jboss.solder.exception.control.ExceptionToCatch;
@@ -13,7 +16,7 @@ public class UsuarioDao extends GenericJpaRepository<Usuario, Integer>{
 	
 	public Usuario authenticateUser(Usuario usuario){
 		try{
-			Query q = entityManager.createQuery("select usuario from Usuario usuario " +
+			Query q = entityManager.createQuery("select distinct usuario from Usuario usuario " +
 					"left join fetch usuario.cliente cliente " +
 					"left join fetch usuario.perfil perfil " +
 					"left join fetch perfil.perfilAcaoDominios perfilAcaoDominios " +
@@ -28,6 +31,23 @@ public class UsuarioDao extends GenericJpaRepository<Usuario, Integer>{
 			catchEvent.fire(new ExceptionToCatch(e));
 		}
 		return usuario;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> findAll() {
+		try{
+			Query q = entityManager.createQuery("select distinct usuario from Usuario usuario " +
+					"left join fetch usuario.cliente cliente " +
+					"left join fetch usuario.perfil perfil " +
+					"left join fetch perfil.perfilAcaoDominios perfilAcaoDominios " +
+					"left join fetch perfilAcaoDominios.dominio " +
+					"left join fetch perfilAcaoDominios.acao ");
+			return (List<Usuario>)q.getResultList();
+		} catch (Exception e) {
+			catchEvent.fire(new ExceptionToCatch(e));
+		}
+		return new ArrayList<Usuario>();
 	}
 	
 }

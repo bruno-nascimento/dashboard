@@ -116,7 +116,7 @@
 								value="#{formularioBean.dataModel}"
 								tableStyleClass="table table-bordered table-striped" paginator="true" paginatorPosition="bottom"
 								rows="10" selection="#{formularioBean.formularioForm}" selectionMode="single" emptyMessage="Nenhum formulário cadastrado">
-								<p:ajax event="rowSelect" listener="#{formularioBean.onRowSelect}" update=":formz,:title_header" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz'); hide_checkbox();"/>
+								<p:ajax event="rowSelect" listener="#{formularioBean.onRowSelect}" update=":formz,:title_header" oncomplete="$('select').chosen(); onSelectItemOpenForm('formz'); "/>
 								<p:column headerText="Nome">
 									<h:outputText value="#{formulario.nome}" />
 								</p:column>

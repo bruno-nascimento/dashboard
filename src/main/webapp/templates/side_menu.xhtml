@@ -74,6 +74,9 @@
 						<ui:fragment rendered="#{loginBean.hasAccessToDominio('CAMPO')}">
 							<li><h:commandLink value="Campo" action="/admin/campo/campo?faces-redirect=true"/></li>
 						</ui:fragment>
+						<ui:fragment rendered="#{loginBean.hasAccessToDominio('FORMULARIO')}">
+							<li><h:commandLink value="TESTE RENDERIZADOR FORMULARIOS" action="/admin/formulario/renderizador?faces-redirect=true"/></li>
+						</ui:fragment>
 					</ul>
 				</li>
 			</ul>

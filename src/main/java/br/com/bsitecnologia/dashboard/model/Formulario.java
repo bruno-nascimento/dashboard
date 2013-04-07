@@ -3,8 +3,8 @@ package br.com.bsitecnologia.dashboard.model;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,10 +31,10 @@ public class Formulario implements Serializable, BaseEntity {
 	private String nome;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formulario")
-	private Set<TransicaoStatus> transicaoStatuses = new HashSet<TransicaoStatus>(0);
+	private List<TransicaoStatus> transicaoStatuses = new ArrayList<TransicaoStatus>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "formulario")
-	private Set<CampoFormulario> campoFormularios = new HashSet<CampoFormulario>(0);
+	private List<CampoFormulario> campoFormularios = new ArrayList<CampoFormulario>(0);
 
 	
 	public Formulario() {
@@ -44,7 +44,7 @@ public class Formulario implements Serializable, BaseEntity {
 		this.nome = nome;
 	}
 	
-	public Formulario(String nome, Set<TransicaoStatus> transicaoStatuses,Set<CampoFormulario> campoFormularios) {
+	public Formulario(String nome, List<TransicaoStatus> transicaoStatuses,List<CampoFormulario> campoFormularios) {
 		this.nome = nome;
 		this.transicaoStatuses = transicaoStatuses;
 		this.campoFormularios = campoFormularios;
@@ -67,19 +67,19 @@ public class Formulario implements Serializable, BaseEntity {
 		this.nome = nome;
 	}
 
-	public Set<TransicaoStatus> getTransicaoStatuses() {
+	public List<TransicaoStatus> getTransicaoStatuses() {
 		return this.transicaoStatuses;
 	}
 
-	public void setTransicaoStatuses(Set<TransicaoStatus> transicaoStatuses) {
+	public void setTransicaoStatuses(List<TransicaoStatus> transicaoStatuses) {
 		this.transicaoStatuses = transicaoStatuses;
 	}
 
-	public Set<CampoFormulario> getCampoFormularios() {
+	public List<CampoFormulario> getCampoFormularios() {
 		return this.campoFormularios;
 	}
 
-	public void setCampoFormularios(Set<CampoFormulario> campoFormularios) {
+	public void setCampoFormularios(List<CampoFormulario> campoFormularios) {
 		this.campoFormularios = campoFormularios;
 	}
 

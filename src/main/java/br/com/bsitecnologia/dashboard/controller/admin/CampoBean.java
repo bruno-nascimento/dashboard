@@ -122,7 +122,7 @@ public class CampoBean extends BaseCrudBean<Campo> implements Serializable {
 		tipoInputIdSelectedItem = campoForm.getTipoInput() != null ? campoForm.getTipoInput().getId().toString() : null;
 		setTipoDadoComboOptions();
 		tipoDadoIdSelectedItem = campoForm.getTipoDado() != null ? campoForm.getTipoDado().getId().toString() : null;
-		listaOpcoes = campoForm.getOpcoes();
+		listaOpcoes = campoService.getOpcoesByCampo(campoForm);
 	}
 	
 	private void setTipoDadoComboOptions(){

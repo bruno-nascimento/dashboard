@@ -63,6 +63,35 @@
 							<div class="controls">
 								<p:password id="senha" value="#{usuarioBean.usuarioForm.senha}" />
 							</div>
+						</div>
+						
+						<div class="control-group">
+								<label class="control-label">Telefones :</label>
+								<div class="controls">
+									
+									<p:commandButton id="effectsDialogButton" value="Adicionar telefone" onclick="dlg3.show();" type="button" />
+									
+										<p:dataTable id="telefonesTable" value="#{usuarioBean.listaTelefones}" var="telefone" style="max-width:80%;  padding-top:1em;">
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Número" />
+												</f:facet>
+												<h:outputText value="#{telefone.numero}" />
+											</p:column>
+	
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Remover" />
+												</f:facet>
+												<p:commandLink value="Remove" update="telefonesTable" partialSubmit="true" process="@this">
+													<p:collector value="#{telefone}" removeFrom="#{usuarioBean.listaTelefones}" />
+												</p:commandLink>
+											</p:column>
+	
+										</p:dataTable>
+									
+								</div>
 						</div>					
 		
 						<div class="form-actions">
@@ -121,6 +150,24 @@
 			</div>
 
 		</div>
+		
+		<h:form id="telefonesForm">
+			<p:dialog widgetVar="dlg3" showEffect="puff" hideEffect="puff" >
+				<f:facet name="header">
+					<h5>Adicionar telefone</h5>
+				</f:facet>  
+				<h:panelGrid columns="2" cellpadding="5">  
+		            <h:outputLabel for="numeroTelefone" value="Número:" />  
+					<p:inputText id="numeroTelefone" value="#{usuarioBean.telefone.numero}"/>
+		              
+		            <f:facet name="footer">  
+				        <p:commandButton id="btn_add_telefone" value="ok" update=":formz:telefonesTable" process="@form" oncomplete="dlg3.hide();" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn btn-inverse" action="#{usuarioBean.resetTelefone}">  
+				        	<p:collector value="#{usuarioBean.telefone}" addTo="#{usuarioBean.listaTelefones}" />  
+				        </p:commandButton>
+		            </f:facet>  
+		        </h:panelGrid>  
+			</p:dialog>
+		</h:form>
 
 	</ui:define>
 
